@@ -21,16 +21,17 @@ public class DangerbotApplication {
         // Insert your bot's token here
         String token = System.getenv("DISCORD_TOKEN");
 
+        System.out.println(token);
 
-        DiscordApi api = new DiscordApiBuilder().setToken(token).login().join();
-
-        //Print server Name
-        api.getServers().forEach(server -> {
-            System.out.println("Server Name: "+server.getName());
-        });
-
-        // Add a listener \
-        api.addListener(new RollListener());
+//        DiscordApi api = new DiscordApiBuilder().setToken(token).login().join();
+//
+//        //Print server Name
+//        api.getServers().forEach(server -> {
+//            System.out.println("Server Name: "+server.getName());
+//        });
+//
+//        // Add a listener \
+//        api.addListener(new RollListener());
     }
 
 }
