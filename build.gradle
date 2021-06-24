@@ -9,6 +9,13 @@ defaultTasks 'clean', 'build', 'test'
 group = 'com.waffle.dangerbot'
 sourceCompatibility = '11'
 
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.waffle.dangerbot.DangerbotAppplication'
+
+        archiveName 'dangerbot.jar'
+    }
+}
 
 configurations {
     compileOnly {
