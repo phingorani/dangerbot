@@ -13,7 +13,7 @@ public class DangerbotApplication {
         SpringApplication.run(DangerbotApplication.class, args);
 
         // Insert your bot's token here
-        String token = "NDYzMzk5NTgxNzEyMTIxODU4.WzpkfQ.-ztxdh60Qvlk5-69tvhOxMjIAYY";
+        String token = process.env.DISCORD_TOKEN;
 
         DiscordApi api = new DiscordApiBuilder().setToken(token).login().join();
 
