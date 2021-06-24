@@ -2,17 +2,10 @@ plugins {
     id 'org.springframework.boot' version '2.5.1'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
-    id 'idea'
 }
 
-apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'idea'
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
-
 defaultTasks 'clean', 'build', 'test'
-group = 'com.waffle.dangerbot'
+group = 'com.waffle'
 sourceCompatibility = '11'
 
 jar {
