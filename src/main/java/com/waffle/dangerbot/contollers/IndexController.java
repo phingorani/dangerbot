@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class IndexController {
 
     @Value("${info.build.version}")
-    Integer appVersion;
+    String appVersion;
 
     @Value("${info.build.name}")
     String appName;
@@ -22,6 +22,6 @@ public class IndexController {
 
     @GetMapping("version")
     String getVersion() {
-        return appName +"\n Version: "+ appVersion.toString();
+        return appName +"\n Version: "+ appVersion;
     }
 }
