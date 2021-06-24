@@ -41,6 +41,7 @@ repositories {
 }
 
 dependencies {
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
     implementation 'org.javacord:javacord:3.3.0'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-web-services'
