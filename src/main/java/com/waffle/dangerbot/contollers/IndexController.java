@@ -22,6 +22,6 @@ public class IndexController {
 
     @GetMapping("version")
     String getVersion() {
-        return appName +"\n Version: "+ appVersion;
+        return appName +"\n Version: "+ appVersion.toString();
     }
 }
