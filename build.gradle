@@ -8,7 +8,6 @@ plugins {
 defaultTasks 'clean', 'build', 'test'
 group = 'com.waffle.dangerbot'
 sourceCompatibility = '11'
-sourceSets.main.java.srcDirs = ['src']
 mainClassName = 'dangerbot.DangerbotAppplication'
 
 jar {
