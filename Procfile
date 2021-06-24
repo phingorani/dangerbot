@@ -1,1 +1,1 @@
-java -Dserver.port=$PORT -jar build/libs/dangerbot.jar
+java -Dserver.port=$PORT $JAVA_OPTS -jar build/libs/dangerbot.jar
