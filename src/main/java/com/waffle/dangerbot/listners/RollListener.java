@@ -55,7 +55,7 @@ public class RollListener implements MessageCreateListener {
     }
 
     private void validateBotRollCommand(MessageCreateEvent event) {
-        if (BotUtilService.validateBotRollCommand(event, command) || !(channelId == event.getChannel().getId())) {
+        if (BotUtilService.validateBotRollCommand(event, command) && channelId.longValue() == event.getChannel().getId()) {
             isBotRollCommand = Boolean.TRUE;
         } else {
             isBotRollCommand = Boolean.FALSE;
