@@ -5,6 +5,14 @@ plugins {
     id 'idea'
     id 'application'
 }
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'application'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
 defaultTasks 'clean', 'build', 'test'
 group = 'com.waffle.dangerbot'
 sourceCompatibility = '11'
@@ -12,10 +20,15 @@ version = '0.0.1'
 mainClassName = 'com.waffle.dangerbot.DangerbotAppplication'
 
 jar {
+    enabled = true
     manifest {
-        attributes ('Main-Class': 'com.waffle.dangerbot.DangerbotAppplication')
+        attributes 'Main-Class': 'com.waffle.dangerbot.DangerbotAppplication'
         archiveName 'dangerbot.jar'
     }
+}
+
+if (!hasProperty('mainClass')) {
+    ext.mainClass = 'com.waffle.dangerbot.DangerbotAppplication'
 }
 
 configurations {
@@ -47,10 +60,3 @@ dependencies {
 test {
     useJUnitPlatform()
 }
-
-apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'idea'
-apply plugin: 'application'
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
