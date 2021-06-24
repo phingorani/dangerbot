@@ -5,6 +5,10 @@ plugins {
     id 'application'
 }
 
+
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+
 defaultTasks 'clean', 'build', 'test'
 group = 'com.waffle'
 version = '0.0.1'
@@ -18,13 +22,9 @@ jar {
     }
 }
 
-
-
 application {
     mainClass = 'com.waffle.dangerbot.DangerbotApplication'
 }
-
-
 
 if (!hasProperty('mainClass')) {
     ext.mainClass = 'com.waffle.dangerbot'
