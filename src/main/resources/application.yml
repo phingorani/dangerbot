@@ -1,0 +1,13 @@
+spring:
+  main:
+    web-application-type: none
+  datasource:
+    driverClassName: org.postgresql.Driver
+    maxActive: 10
+    maxIdle: 5
+    minIdle: 2
+    initialSize: 5
+    removeAbandoned: true
+    url: jdbc:postgresql://ec2-52-23-45-36.compute-1.amazonaws.com:5432/dci5iukgi2bv7k
+    username: litislxccodetg
+    password: 3d071906ab0a09da56f567f664f3d6a1013355ed5bffdd8152ede41c044edf31
