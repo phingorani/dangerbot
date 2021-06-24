@@ -11,13 +11,13 @@ sourceCompatibility = '11'
 jar {
     enabled = true
     manifest {
-        attributes 'Main-Class': 'com.waffle.dangerbot.DangerbotAppplication'
+        attributes 'Main-Class': 'com.waffle.dangerbot'
         archiveName 'dangerbot.jar'
     }
 }
 
 if (!hasProperty('mainClass')) {
-    ext.mainClass = 'com.waffle.dangerbot.DangerbotAppplication'
+    ext.mainClass = 'com.waffle.dangerbot'
 }
 
 configurations {
