@@ -8,7 +8,7 @@ plugins {
 defaultTasks 'clean', 'build', 'test'
 group = 'com.waffle.dangerbot'
 sourceCompatibility = '11'
-mainClassName = 'dangerbot.DangerbotAppplication'
+mainClassName = 'DangerbotAppplication'
 
 jar {
     manifest {
