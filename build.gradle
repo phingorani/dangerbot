@@ -2,9 +2,11 @@ plugins {
     id 'org.springframework.boot' version '2.5.1'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
+    id 'idea'
+    id 'application'
 }
-
-group = 'com.waffle'
+defaultTasks 'clean', 'build', 'test'
+group = 'com.waffle.dangerbot'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
@@ -36,3 +38,13 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'application'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+mainClassName = 'com.waffle.dangerbot' +
+        'DangerbotApplication'
