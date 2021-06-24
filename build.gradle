@@ -16,7 +16,6 @@ apply plugin: 'io.spring.dependency-management'
 defaultTasks 'clean', 'build', 'test'
 group = 'com.waffle.dangerbot'
 sourceCompatibility = '11'
-version = '0.0.1'
 mainClassName = 'com.waffle.dangerbot.DangerbotAppplication'
 
 jar {
