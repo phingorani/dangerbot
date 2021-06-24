@@ -1,0 +1,1 @@
+ web java -Dserver.port=$PORT $JAVA_OPTS -jar build/libs/dangerbot.jar com.waffle.dangerbot.DangerbotAppplication
