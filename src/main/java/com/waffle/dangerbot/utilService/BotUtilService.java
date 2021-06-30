@@ -23,7 +23,7 @@ public class BotUtilService {
         if (strings.isEmpty() || strings.size() < 3) {
             return Boolean.FALSE;
         }
-        return event.getMessageContent().split(" ")[1].equalsIgnoreCase(BotCommandsConstant.CHALLENGE);
+        return event.getMessageContent().split(" ")[0].equalsIgnoreCase("!"+BotCommandsConstant.CHALLENGE);
     }
 
     public static Boolean isDeleteCommand(MessageCreateEvent event) {
