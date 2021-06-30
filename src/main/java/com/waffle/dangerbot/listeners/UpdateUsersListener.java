@@ -20,6 +20,7 @@ public class UpdateUsersListener implements MessageCreateListener {
         if (BotUtilService.isValidateBotCommand(event)) {
             if (BotUtilService.isAdmin(event) && BotUtilService.isUpdateUsers(event)) {
                 event.getApi().getCachedUsers().forEach(user -> {
+                    System.out.println(user.getName());
                     if (discordUserRepository.existsById(user.getId())) {
                         DiscordUser discordUser = new DiscordUser();
                         discordUser.setDisplayName(user.getName());
@@ -27,7 +28,6 @@ public class UpdateUsersListener implements MessageCreateListener {
                         discordUserRepository.save(discordUser);
                     }
                 });
-                System.out.println("Added a bunch of people!");
             }
         }
     }
