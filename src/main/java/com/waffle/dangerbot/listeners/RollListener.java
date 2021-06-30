@@ -27,9 +27,6 @@ public class RollListener implements MessageCreateListener {
     @Autowired
     private UserService userService;
 
-    public RollListener() {
-    }
-
     @Override
     public void onMessageCreate(MessageCreateEvent event) {
         validateBotRollCommand(event);
