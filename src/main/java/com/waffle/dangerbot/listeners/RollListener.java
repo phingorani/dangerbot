@@ -24,6 +24,7 @@ public class RollListener implements MessageCreateListener {
 
     Long channelId = 857362959109586984L;
 
+    @Autowired
     private UserRepository userRepository;
 
     @Override
