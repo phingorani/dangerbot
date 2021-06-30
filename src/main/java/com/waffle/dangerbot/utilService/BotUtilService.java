@@ -44,7 +44,7 @@ public class BotUtilService {
     }
 
     public static boolean isAdmin(MessageCreateEvent event) {
-        return UserIdConstants.getADMINS().contains(event.getMessageAuthor().getId());
+        return event.getMessageAuthor().getId() == UserIdConstants.WAFFLE;
     }
 
     public static boolean isUpdateUsers(MessageCreateEvent event) {

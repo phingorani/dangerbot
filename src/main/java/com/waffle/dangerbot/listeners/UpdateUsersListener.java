@@ -16,7 +16,6 @@ public class UpdateUsersListener implements MessageCreateListener {
 
     @Override
     public void onMessageCreate(MessageCreateEvent event) {
-
         if (BotUtilService.isValidateBotCommand(event)) {
             if (BotUtilService.isAdmin(event) && BotUtilService.isUpdateUsers(event)) {
                 event.getApi().getCachedUsers().forEach(user -> {
