@@ -19,7 +19,7 @@ public class WelcomeListener implements ServerMemberJoinListener {
 
     @Override
     public void onServerMemberJoin(ServerMemberJoinEvent event) {
-        DiscordUser discordUserToSave = new DiscordUser(null, event.getUser().getName(), event.getUser().getId());
+        DiscordUser discordUserToSave = new DiscordUser(event.getUser().getName(), event.getUser().getId());
         discordUserService.save(discordUserToSave);
         List<Role> rolesList = event.getServer().getRoles();
         rolesList.forEach(role -> {System.out.println(role.getId()+ "  :  "+role.getName());});
