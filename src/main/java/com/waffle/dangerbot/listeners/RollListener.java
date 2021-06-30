@@ -1,7 +1,7 @@
 package com.waffle.dangerbot.listeners;
 
 import com.waffle.dangerbot.constants.BotCommandsConstant;
-import com.waffle.dangerbot.entity.User;
+import com.waffle.dangerbot.entity.DiscordUser;
 import com.waffle.dangerbot.service.UserService;
 import com.waffle.dangerbot.utilService.BotUtilService;
 import org.javacord.api.entity.message.MessageBuilder;
@@ -88,10 +88,10 @@ public class RollListener implements MessageCreateListener {
             System.out.println("User Repo is null");
         }
         else {
-            Optional<User> exists = Optional.ofNullable(userService.findByDiscordId(event.getMessageAuthor().getId()));
+            Optional<DiscordUser> exists = Optional.ofNullable(userService.findByDiscordId(event.getMessageAuthor().getId()));
             if (exists.isEmpty()) {
-                User userToSave = new User(null, event.getMessageAuthor().getDisplayName(), event.getMessageAuthor().getId());
-                userService.save(userToSave);
+                DiscordUser discordUserToSave = new DiscordUser(null, event.getMessageAuthor().getDisplayName(), event.getMessageAuthor().getId());
+                userService.save(discordUserToSave);
             }
         }
     }

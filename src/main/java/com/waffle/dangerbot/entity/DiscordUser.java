@@ -3,8 +3,8 @@ package com.waffle.dangerbot.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "user")
-public class User {
+@Table(name = "discord_user")
+public class DiscordUser {
     public Long getUserId() {
         return userId;
     }
@@ -40,13 +40,13 @@ public class User {
     @Column(name = "discord_id")
     private Long discordId;
 
-    public User(Long userId, String displayName, Long discordId) {
+    public DiscordUser(Long userId, String displayName, Long discordId) {
         this.userId = userId;
         this.displayName = displayName;
         this.discordId = discordId;
     }
 
-    public User() {
+    public DiscordUser() {
 
     }
 }

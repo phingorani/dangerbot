@@ -1,6 +1,6 @@
 package com.waffle.dangerbot.service;
 
-import com.waffle.dangerbot.entity.User;
+import com.waffle.dangerbot.entity.DiscordUser;
 import com.waffle.dangerbot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,11 +15,11 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public void save(User user) {
-        userRepository.save(user);
+    public void save(DiscordUser discordUser) {
+        userRepository.save(discordUser);
     }
 
-    public User findByDiscordId(long id) {
+    public DiscordUser findByDiscordId(long id) {
        return userRepository.findByDiscordId(id);
     }
 }
