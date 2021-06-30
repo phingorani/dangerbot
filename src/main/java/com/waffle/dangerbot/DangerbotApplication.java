@@ -12,7 +12,6 @@ import org.springframework.context.annotation.ComponentScan;
 
 
 @SpringBootApplication
-@ComponentScan("com.waffle.dangerbot.listeners")
 public class DangerbotApplication {
 
     private static final Logger logger = LoggerFactory.getLogger(DangerbotApplication.class);

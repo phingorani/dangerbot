@@ -2,7 +2,6 @@ package com.waffle.dangerbot.listeners;
 
 import com.waffle.dangerbot.constants.BotCommandsConstant;
 import com.waffle.dangerbot.entity.User;
-import com.waffle.dangerbot.repository.UserRepository;
 import com.waffle.dangerbot.service.UserService;
 import com.waffle.dangerbot.utilService.BotUtilService;
 import org.javacord.api.entity.message.MessageBuilder;
@@ -12,13 +11,14 @@ import org.javacord.api.listener.message.MessageCreateListener;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
-@Component
+@Controller
 public class RollListener implements MessageCreateListener {
 
     Boolean isBotRollCommand = Boolean.FALSE;
