@@ -1,15 +1,20 @@
 package com.waffle.dangerbot.listeners;
 
+import com.waffle.dangerbot.constants.BotCommandsConstant;
+import com.waffle.dangerbot.entity.User;
+import com.waffle.dangerbot.repository.UserRepository;
 import com.waffle.dangerbot.utilService.BotUtilService;
 import org.javacord.api.entity.message.MessageBuilder;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.event.message.MessageCreateEvent;
 import org.javacord.api.listener.message.MessageCreateListener;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 @Component
@@ -19,8 +24,8 @@ public class RollListener implements MessageCreateListener {
 
     Long channelId = 857362959109586984L;
 
-    String command = "roll";
-
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public void onMessageCreate(MessageCreateEvent event) {
@@ -33,10 +38,9 @@ public class RollListener implements MessageCreateListener {
         String result = randomNumberGenerator(upperLimit).toString();
 
 
-        if(result.equals("1")) {
+        if (result.equals("1")) {
             sendLoserMessage(event);
-        }
-        else {
+        } else {
             sendRegularMessage(event, result, upperLimit.toString());
         }
 
@@ -45,7 +49,7 @@ public class RollListener implements MessageCreateListener {
     private Integer extractUpperLimit(String messageContent) {
         List<String> splitStrings = Arrays.asList(messageContent.split(" "));
 
-        if(splitStrings.isEmpty() || splitStrings.size() == 1  || !splitStrings.get(1).matches("^[0-9]+$")) {
+        if (splitStrings.isEmpty() || splitStrings.size() == 1 || !splitStrings.get(1).matches("^[0-9]+$")) {
             return 100;
         }
 
@@ -54,7 +58,7 @@ public class RollListener implements MessageCreateListener {
     }
 
     private void validateBotRollCommand(MessageCreateEvent event) {
-        if (BotUtilService.validateBotRollCommand(event, command) && channelId.longValue() == event.getChannel().getId()) {
+        if (BotUtilService.validateBotRollCommand(event, BotCommandsConstant.ROLL) && channelId.longValue() == event.getChannel().getId()) {
             isBotRollCommand = Boolean.TRUE;
         } else {
             isBotRollCommand = Boolean.FALSE;
@@ -68,7 +72,7 @@ public class RollListener implements MessageCreateListener {
 
     private void sendLoserMessage(MessageCreateEvent event) {
         MessageBuilder messageBuilder = new MessageBuilder();
-        messageBuilder.append("<@"+event.getMessageAuthor().getId()+">! You rolled a 1! You lose!");
+        messageBuilder.append("<@" + event.getMessageAuthor().getId() + ">! You rolled a 1! You lose!");
 
         EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setImage("https://media1.tenor.com/images/7066494e5810e5a84d68d5696004eec4/tenor.gif?itemid=7465431");
@@ -77,7 +81,11 @@ public class RollListener implements MessageCreateListener {
     }
 
     private void sendRegularMessage(MessageCreateEvent event, String result, String upperLimit) {
-        System.out.println("User: "+event.getMessageAuthor().getDisplayName()+" "+event.getMessageAuthor().getId());
+        System.out.println("User: " + event.getMessageAuthor().getDisplayName() + " " + event.getMessageAuthor().getId());
+        Optional<User> exists = Optional.ofNullable(userRepository.findByDiscordId(event.getMessageAuthor().getId()));
+        if (exists.isEmpty()) {
+            User userToSave = new User(null,event.getMessageAuthor().getDisplayName(),event.getMessageAuthor().getId());
+        }
         event.getChannel().sendMessage("<@" + event.getMessageAuthor().getId() + "> rolled a " + result + " out of " + upperLimit);
     }
 }

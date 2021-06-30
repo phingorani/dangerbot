@@ -11,4 +11,14 @@ public class User {
 
     private String displayName;
     private Long discordId;
+
+    public User(Long userId, String displayName, Long discordId) {
+        this.userId = userId;
+        this.displayName = displayName;
+        this.discordId = discordId;
+    }
+
+    public User() {
+
+    }
 }
