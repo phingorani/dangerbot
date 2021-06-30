@@ -67,10 +67,15 @@ public class RollListener implements MessageCreateListener {
     }
 
     private void createRollSession(MessageCreateEvent event) {
+        Optional<GameSession> exists = Optional.ofNullable(gameSessionService.findByChallengerIdOrChallengedIdAndAcceptedInd(event.getMessageAuthor().getId()));
+
+        if(exists.isEmpty()) {
+            return;
+        }
+
         Integer upperLimit = extractUpperLimit(event.getMessageContent());
 
         String result = randomNumberGenerator(upperLimit).toString();
-
 
         if (result.equals("1")) {
             sendLoserMessage(event);
@@ -91,6 +96,7 @@ public class RollListener implements MessageCreateListener {
         gameSessionToSave.setChallengerId(event.getMessageAuthor().getId());
         gameSessionToSave.setChallengedId(event.getMessage().getMentionedUsers().get(0).getId());
         gameSessionToSave.setBetAmount(Integer.parseInt(event.getMessageContent().split(" ")[2]));
+        gameSessionToSave.setAcceptedInd(Boolean.FALSE);
 
         gameSessionService.save(gameSessionToSave);
 

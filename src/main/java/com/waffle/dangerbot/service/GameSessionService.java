@@ -27,4 +27,8 @@ public class GameSessionService {
     public GameSession findByChallengedId(long challengedId) {
         return gameSessionRepository.findGameSessionByChallengedId(challengedId);
     }
+
+    public GameSession findByChallengerIdOrChallengedIdAndAcceptedInd(long id) {
+        return gameSessionRepository.findGameSessionByChallengedIdOrChallengerId(id, id, Boolean.TRUE);
+    }
 }
