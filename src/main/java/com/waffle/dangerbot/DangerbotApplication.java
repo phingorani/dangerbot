@@ -1,6 +1,7 @@
 package com.waffle.dangerbot;
 
-import com.waffle.dangerbot.listners.RollListener;
+import com.waffle.dangerbot.listeners.BotCommandListener;
+import com.waffle.dangerbot.listeners.RollListener;
 import org.javacord.api.DiscordApi;
 import org.javacord.api.DiscordApiBuilder;
 import org.slf4j.Logger;
@@ -32,6 +33,7 @@ public class DangerbotApplication {
 
         // Add a listener \
         api.addListener(new RollListener());
+        api.addListener(new BotCommandListener());
     }
 
 }

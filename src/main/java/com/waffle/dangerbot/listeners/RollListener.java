@@ -1,7 +1,6 @@
-package com.waffle.dangerbot.listners;
+package com.waffle.dangerbot.listeners;
 
 import com.waffle.dangerbot.utilService.BotUtilService;
-import org.javacord.api.entity.message.Message;
 import org.javacord.api.entity.message.MessageBuilder;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.event.message.MessageCreateEvent;
@@ -78,6 +77,7 @@ public class RollListener implements MessageCreateListener {
     }
 
     private void sendRegularMessage(MessageCreateEvent event, String result, String upperLimit) {
+        System.out.println("User: "+event.getMessageAuthor().getDisplayName()+" "+event.getMessageAuthor().getId());
         event.getChannel().sendMessage("<@" + event.getMessageAuthor().getId() + "> rolled a " + result + " out of " + upperLimit);
     }
 }
