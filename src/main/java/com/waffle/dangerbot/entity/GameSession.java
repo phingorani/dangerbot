@@ -20,6 +20,17 @@ public class GameSession {
     @Column(name = "challenged_id")
     private Long challengedId;
 
+    @Column(name = "accepted_ind")
+    private Boolean acceptedInd;
+
+    public Boolean getAcceptedInd() {
+        return acceptedInd;
+    }
+
+    public void setAcceptedInd(Boolean acceptedInd) {
+        this.acceptedInd = acceptedInd;
+    }
+
     public Long getGameSessionId() {
         return gameSessionId;
     }

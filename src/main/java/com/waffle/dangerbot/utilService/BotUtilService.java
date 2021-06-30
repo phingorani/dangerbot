@@ -38,4 +38,7 @@ public class BotUtilService {
         return event.getChannel().getId() == channelId;
     }
 
+    public static boolean isAcceptChallengeCommand(MessageCreateEvent event) {
+        return event.getMessageContent().equalsIgnoreCase("!"+BotCommandsConstant.ACCEPT_CHALLENGE);
+    }
 }

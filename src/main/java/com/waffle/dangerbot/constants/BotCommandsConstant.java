@@ -8,6 +8,8 @@ public class BotCommandsConstant {
 
     public static String DELETE_CHALLENGE = "delete";
 
+    public static String ACCEPT_CHALLENGE = "accept";
+
     public static String VERSION = "version";
 
 }

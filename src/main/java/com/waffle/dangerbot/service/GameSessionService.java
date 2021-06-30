@@ -23,4 +23,8 @@ public class GameSessionService {
     }
 
     public void delete(GameSession gameSession){ gameSessionRepository.delete(gameSession);}
+
+    public GameSession findByChallengedId(long challengedId) {
+        return gameSessionRepository.findGameSessionByChallengedId(challengedId);
+    }
 }

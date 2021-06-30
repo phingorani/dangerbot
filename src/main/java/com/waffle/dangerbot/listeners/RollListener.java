@@ -40,6 +40,8 @@ public class RollListener implements MessageCreateListener {
             createChallengeSession(event);
         } else if (BotUtilService.isDeleteChallengeCommand(event)) {
             deleteRollSession(event);
+        } else if (BotUtilService.isAcceptChallengeCommand(event)) {
+            acceptChallengeSession(event);
         } else if (BotUtilService.isRollCommand(event)) {
             createRollSession(event);
         }
@@ -50,7 +52,17 @@ public class RollListener implements MessageCreateListener {
 
         if (exists.isPresent()) {
             gameSessionService.delete(exists.get());
-            event.getChannel().sendMessage("<@" + event.getMessageAuthor().getId() + "> challenge deleted Quitter!");
+            event.getChannel().sendMessage("<@" + event.getMessageAuthor().getId() + "> challenge with <@"+exists.get().getChallengedId() +"> deleted Quitter!");
+        }
+    }
+
+    private void acceptChallengeSession(MessageCreateEvent event) {
+        Optional<GameSession> exists = Optional.ofNullable(gameSessionService.findByChallengedId(event.getMessageAuthor().getId()));
+        if(exists.isPresent()) {
+            GameSession gameSessionToUpdate = exists.get();
+            gameSessionToUpdate.setAcceptedInd(Boolean.TRUE);
+            gameSessionService.save(gameSessionToUpdate);
+            event.getChannel().sendMessage("Challenge Accepted! <@" + gameSessionToUpdate.getChallengerId() + "> and <@"+exists.get().getChallengedId() +">, get ready to roll! May the best Kegz win!");
         }
     }
 

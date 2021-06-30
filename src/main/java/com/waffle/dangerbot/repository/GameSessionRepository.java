@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface GameSessionRepository extends JpaRepository<GameSession, Long> {
     GameSession findGameSessionByChallengerId(long challengerId);
+
+    GameSession findGameSessionByChallengedId(long challengedId);
 }
