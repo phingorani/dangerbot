@@ -133,6 +133,8 @@ public class RollListener implements MessageCreateListener {
         gameSessionToSave.setChallengedId(event.getMessage().getMentionedUsers().get(0).getId());
         gameSessionToSave.setBetAmount(Integer.parseInt(event.getMessageContent().split(" ")[2]));
         gameSessionToSave.setAcceptedInd(Boolean.FALSE);
+        gameSessionToSave.setChallengerTurn(Boolean.TRUE);
+        gameSessionToSave.setChallengedTurn(Boolean.FALSE);
         gameSessionService.save(gameSessionToSave);
     }
 

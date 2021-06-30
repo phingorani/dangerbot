@@ -22,6 +22,7 @@ public class WelcomeListener implements ServerMemberJoinListener {
         DiscordUser discordUserToSave = new DiscordUser(event.getUser().getName(), event.getUser().getId());
         discordUserService.save(discordUserToSave);
         List<Role> rolesList = event.getServer().getRoles();
+        rolesList.stream().map(Role::getName);
         rolesList.forEach(role -> {System.out.println(role.getId()+ "  :  "+role.getName());});
         Optional<Role> role = rolesList.stream().filter(innerRole -> innerRole.getName().equalsIgnoreCase("New")).findFirst();
         if (role.isPresent()) {
