@@ -1,8 +1,9 @@
 package com.waffle.dangerbot.listeners;
 
-import com.waffle.dangerbot.constants.BotCommandsConstant;
 import com.waffle.dangerbot.entity.DiscordUser;
-import com.waffle.dangerbot.service.UserService;
+import com.waffle.dangerbot.entity.GameSession;
+import com.waffle.dangerbot.service.DiscordUserService;
+import com.waffle.dangerbot.service.GameSessionService;
 import com.waffle.dangerbot.utilService.BotUtilService;
 import org.javacord.api.entity.message.MessageBuilder;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
@@ -20,19 +21,40 @@ import java.util.Random;
 @Component
 public class RollListener implements MessageCreateListener {
 
-    Boolean isBotRollCommand = Boolean.FALSE;
-
     Long channelId = 857362959109586984L;
 
     @Autowired
-    private UserService userService;
+    private DiscordUserService discordUserService;
+
+    @Autowired
+    private GameSessionService gameSessionService;
 
     @Override
     public void onMessageCreate(MessageCreateEvent event) {
-        validateBotRollCommand(event);
-        if (!isBotRollCommand) {
+
+        if (!BotUtilService.isValidateBotCommand(event) || !BotUtilService.isCorrectChannel(event, channelId)) {
             return;
         }
+
+        if (BotUtilService.isChallengeCommand(event)) {
+            createChallengeSession(event);
+        } else if (BotUtilService.isRollCommand(event)) {
+            createRollSession(event);
+        } else if(BotUtilService.isDeleteCommand(event)) {
+            deleteRollSession(event);
+        }
+    }
+
+    private void deleteRollSession(MessageCreateEvent event) {
+        Optional<GameSession> exists = Optional.ofNullable(gameSessionService.findByChallengerId(event.getMessageAuthor().getId()));
+
+        if (exists.isPresent()) {
+            gameSessionService.delete(exists.get());
+            event.getChannel().sendMessage("<@" + event.getMessageAuthor().getId() + "> challenge deleted Quitter!");
+        }
+    }
+
+    private void createRollSession(MessageCreateEvent event) {
         Integer upperLimit = extractUpperLimit(event.getMessageContent());
 
         String result = randomNumberGenerator(upperLimit).toString();
@@ -43,7 +65,15 @@ public class RollListener implements MessageCreateListener {
         } else {
             sendRegularMessage(event, result, upperLimit.toString());
         }
+    }
 
+    private void createChallengeSession(MessageCreateEvent event) {
+        Optional<GameSession> exists = Optional.ofNullable(gameSessionService.findByChallengerId(event.getMessageAuthor().getId()));
+        if (exists.isPresent()) {
+            event.getChannel().sendMessage("<@" + event.getMessageAuthor().getId() + "> You already have an active challenge with <@" + exists.get().getChallengedId() + "> If you'd like to quit type command !delete");
+            return;
+        }
+        System.out.println(event.getMessageContent());
     }
 
     private Integer extractUpperLimit(String messageContent) {
@@ -55,14 +85,6 @@ public class RollListener implements MessageCreateListener {
 
         String numberOnly = messageContent.replaceAll("[^0-9]", "");
         return Integer.parseInt(numberOnly);
-    }
-
-    private void validateBotRollCommand(MessageCreateEvent event) {
-        if (BotUtilService.validateBotRollCommand(event, BotCommandsConstant.ROLL) && channelId.longValue() == event.getChannel().getId()) {
-            isBotRollCommand = Boolean.TRUE;
-        } else {
-            isBotRollCommand = Boolean.FALSE;
-        }
     }
 
     private Integer randomNumberGenerator(Integer upperLimit) {
@@ -83,10 +105,10 @@ public class RollListener implements MessageCreateListener {
     private void sendRegularMessage(MessageCreateEvent event, String result, String upperLimit) {
         event.getChannel().sendMessage("<@" + event.getMessageAuthor().getId() + "> rolled a " + result + " out of " + upperLimit);
 
-        Optional<DiscordUser> exists = Optional.ofNullable(userService.findByDiscordId(event.getMessageAuthor().getId()));
+        Optional<DiscordUser> exists = Optional.ofNullable(discordUserService.findByDiscordId(event.getMessageAuthor().getId()));
         if (exists.isEmpty()) {
             DiscordUser discordUserToSave = new DiscordUser(null, event.getMessageAuthor().getDisplayName(), event.getMessageAuthor().getId());
-            userService.save(discordUserToSave);
+            discordUserService.save(discordUserToSave);
         }
     }
 }
