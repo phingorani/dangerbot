@@ -38,10 +38,10 @@ public class RollListener implements MessageCreateListener {
 
         if (BotUtilService.isChallengeCommand(event)) {
             createChallengeSession(event);
+        } else if (BotUtilService.isDeleteChallengeCommand(event)) {
+            deleteRollSession(event);
         } else if (BotUtilService.isRollCommand(event)) {
             createRollSession(event);
-        } else if(BotUtilService.isDeleteChallengeCommand(event)) {
-            deleteRollSession(event);
         }
     }
 
@@ -74,7 +74,7 @@ public class RollListener implements MessageCreateListener {
             event.getChannel().sendMessage("<@" + event.getMessageAuthor().getId() + "> You already have an active challenge with <@" + exists.get().getChallengedId() + "> If you'd like to quit type command !delete");
             return;
         }
-        event.getChannel().sendMessage("<@" + event.getMessageAuthor().getId() + "> You challenged <@" + event.getMessage().getMentionedUsers().get(0).getId() + "> for "+ event.getMessageContent().split(" ")[2]+" gold!");
+        event.getChannel().sendMessage("<@" + event.getMessageAuthor().getId() + "> You challenged <@" + event.getMessage().getMentionedUsers().get(0).getId() + "> for " + event.getMessageContent().split(" ")[2] + " gold!");
         GameSession gameSessionToSave = new GameSession();
         gameSessionToSave.setChallengerId(event.getMessageAuthor().getId());
         gameSessionToSave.setChallengedId(event.getMessage().getMentionedUsers().get(0).getId());
