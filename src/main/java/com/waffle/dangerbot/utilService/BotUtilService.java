@@ -1,6 +1,7 @@
 package com.waffle.dangerbot.utilService;
 
 import com.waffle.dangerbot.constants.BotCommandsConstant;
+import org.apache.commons.lang3.StringUtils;
 import org.javacord.api.event.message.MessageCreateEvent;
 
 import java.util.Arrays;
@@ -21,6 +22,9 @@ public class BotUtilService {
         List<String> strings = Arrays.asList(event.getMessageContent().split(" "));
 
         if (strings.isEmpty() || strings.size() < 3) {
+            return Boolean.FALSE;
+        }
+        if(!strings.get(0).startsWith("!") || (!strings.get(1).startsWith("<@")&& !strings.get(1).endsWith(">")) || !StringUtils.isNumeric(strings.get(2))) {
             return Boolean.FALSE;
         }
         return event.getMessageContent().split(" ")[0].equalsIgnoreCase("!"+BotCommandsConstant.CHALLENGE);

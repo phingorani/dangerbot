@@ -74,8 +74,15 @@ public class RollListener implements MessageCreateListener {
             event.getChannel().sendMessage("<@" + event.getMessageAuthor().getId() + "> You already have an active challenge with <@" + exists.get().getChallengedId() + "> If you'd like to quit type command !delete");
             return;
         }
-        event.getChannel().sendMessage("<@" + event.getMessageAuthor().getId() + "> You challenged <@" + event.getMessage().getMentionedUsers().get(0).getId() + "> for "+ event.getMessageContent().split(" ")[2].toUpperCase()+" gold!");
-        System.out.println(event.getMessageContent());
+        event.getChannel().sendMessage("<@" + event.getMessageAuthor().getId() + "> You challenged <@" + event.getMessage().getMentionedUsers().get(0).getId() + "> for "+ event.getMessageContent().split(" ")[2]+" gold!");
+        GameSession gameSessionToSave = new GameSession();
+        gameSessionToSave.setChallengerId(event.getMessageAuthor().getId());
+        gameSessionToSave.setChallengedId(event.getMessage().getMentionedUsers().get(0).getId());
+        gameSessionToSave.setBetAmount(Integer.parseInt(event.getMessageContent().split(" ")[2]));
+
+        gameSessionService.save(gameSessionToSave);
+
+        Arrays.asList(event.getMessageContent().split(" ")).forEach(System.out::println);
     }
 
     private Integer extractUpperLimit(String messageContent) {
