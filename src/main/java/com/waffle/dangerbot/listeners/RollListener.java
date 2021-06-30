@@ -101,7 +101,10 @@ public class RollListener implements MessageCreateListener {
         event.getMessage().getMentionedUsers().stream().forEach(user->{
             Optional<DiscordUser> maybe = Optional.ofNullable(discordUserService.findByDiscordId(user.getId()));
             if(maybe.isEmpty()) {
-                discordUserService.save(new DiscordUser(user.getName(), user.getId()));
+                DiscordUser discordUser = new DiscordUser();
+                discordUser.setDiscordId(user.getId());
+                discordUser.setDisplayName(user.getName());
+                discordUserService.save(discordUser);
             }
         });
 
@@ -110,7 +113,10 @@ public class RollListener implements MessageCreateListener {
     private void addMessageAuthorToDB(MessageCreateEvent event) {
         Optional<DiscordUser> author = Optional.ofNullable(discordUserService.findByDiscordId(event.getMessageAuthor().getId()));
         if(author.isEmpty()) {
-            discordUserService.save(new DiscordUser(event.getMessageAuthor().getDisplayName(),event.getMessageAuthor().getId()));
+            DiscordUser discordUser = new DiscordUser();
+            discordUser.setDiscordId(event.getMessageAuthor().getId());
+            discordUser.setDisplayName(event.getMessageAuthor().getDisplayName());
+            discordUserService.save(discordUser);
         }
     }
 
