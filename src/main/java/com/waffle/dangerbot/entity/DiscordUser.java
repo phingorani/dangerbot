@@ -5,13 +5,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "discord_user")
 public class DiscordUser {
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
 
     public String getDisplayName() {
         return displayName;
@@ -29,19 +22,14 @@ public class DiscordUser {
         this.discordId = discordId;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
-    private Long userId;
-
     @Column(name = "display_name")
     private String displayName;
 
+    @Id
     @Column(name = "discord_id")
     private Long discordId;
 
-    public DiscordUser(Long userId, String displayName, Long discordId) {
-        this.userId = userId;
+    public DiscordUser(String displayName, Long discordId) {
         this.displayName = displayName;
         this.discordId = discordId;
     }

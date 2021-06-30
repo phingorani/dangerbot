@@ -27,7 +27,7 @@ public class BotCommandListener implements MessageCreateListener {
         }
         Optional<DiscordUser> exists = Optional.ofNullable(discordUserService.findByDiscordId(event.getMessageAuthor().getId()));
         if (exists.isEmpty()) {
-            DiscordUser discordUserToSave = new DiscordUser(null, event.getMessageAuthor().getDisplayName(), event.getMessageAuthor().getId());
+            DiscordUser discordUserToSave = new DiscordUser(event.getMessageAuthor().getDisplayName(), event.getMessageAuthor().getId());
             discordUserService.save(discordUserToSave);
         }
     }
