@@ -3,6 +3,7 @@ package com.waffle.dangerbot.listeners;
 import com.waffle.dangerbot.entity.DiscordUser;
 import com.waffle.dangerbot.repository.DiscordUserRepository;
 import com.waffle.dangerbot.utilService.BotUtilService;
+import org.javacord.api.entity.permission.Role;
 import org.javacord.api.event.message.MessageCreateEvent;
 import org.javacord.api.listener.message.MessageCreateListener;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ public class UpdateUsersListener implements MessageCreateListener {
     public void onMessageCreate(MessageCreateEvent event) {
         if (BotUtilService.isValidateBotCommand(event)) {
             if (BotUtilService.isAdmin(event) && BotUtilService.isUpdateUsers(event)) {
+                event.getServer().get().getRoles().forEach(role -> System.out.println(role.getName()));
                 event.getServer().get().getMembers().forEach(user -> {
                     if (discordUserRepository.existsById(user.getId())) {
                         DiscordUser discordUser = new DiscordUser();
