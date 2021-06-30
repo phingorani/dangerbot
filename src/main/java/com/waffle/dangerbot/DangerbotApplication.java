@@ -2,6 +2,7 @@ package com.waffle.dangerbot;
 
 import com.waffle.dangerbot.listeners.BotCommandListener;
 import com.waffle.dangerbot.listeners.RollListener;
+import com.waffle.dangerbot.listeners.UpdateUsersListener;
 import com.waffle.dangerbot.listeners.WelcomeListener;
 import org.javacord.api.DiscordApi;
 import org.javacord.api.DiscordApiBuilder;
@@ -24,6 +25,9 @@ public class DangerbotApplication {
 
     @Autowired
     private WelcomeListener welcomeListener;
+
+    @Autowired
+    private UpdateUsersListener updateUsersListener;
 
     public static void main(String[] args) {
 
@@ -51,6 +55,7 @@ public class DangerbotApplication {
         api.addListener(rollListener);
         api.addListener(botCommandListener);
         api.addListener(welcomeListener);
+        api.addListener(updateUsersListener);
     }
 
 }
