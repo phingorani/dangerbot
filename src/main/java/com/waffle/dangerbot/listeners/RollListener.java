@@ -3,6 +3,7 @@ package com.waffle.dangerbot.listeners;
 import com.waffle.dangerbot.constants.BotCommandsConstant;
 import com.waffle.dangerbot.entity.User;
 import com.waffle.dangerbot.repository.UserRepository;
+import com.waffle.dangerbot.service.UserService;
 import com.waffle.dangerbot.utilService.BotUtilService;
 import org.javacord.api.entity.message.MessageBuilder;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
@@ -25,7 +26,7 @@ public class RollListener implements MessageCreateListener {
     Long channelId = 857362959109586984L;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Override
     public void onMessageCreate(MessageCreateEvent event) {
@@ -84,14 +85,14 @@ public class RollListener implements MessageCreateListener {
         System.out.println("User: " + event.getMessageAuthor().getDisplayName() + " " + event.getMessageAuthor().getId());
         event.getChannel().sendMessage("<@" + event.getMessageAuthor().getId() + "> rolled a " + result + " out of " + upperLimit);
 
-        if(userRepository == null) {
+        if(userService == null) {
             System.out.println("User Repo is null");
         }
         else {
-            Optional<User> exists = Optional.ofNullable(userRepository.findByDiscordId(event.getMessageAuthor().getId()));
+            Optional<User> exists = Optional.ofNullable(userService.findByDiscordId(event.getMessageAuthor().getId()));
             if (exists.isEmpty()) {
                 User userToSave = new User(null, event.getMessageAuthor().getDisplayName(), event.getMessageAuthor().getId());
-                userRepository.save(userToSave);
+                userService.save(userToSave);
             }
         }
     }
