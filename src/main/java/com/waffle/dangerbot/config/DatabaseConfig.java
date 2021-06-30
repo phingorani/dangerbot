@@ -67,7 +67,7 @@ public class DatabaseConfig {
     Properties additionalProperties() {
         Properties properties = new Properties();
         properties.setProperty("hibernate.hbm2ddl.auto","update");
-        properties.setProperty("hibernate.dialect","org.hibernate.dialect.HSQLDialect");
+        properties.setProperty("hibernate.dialect","org.hibernate.dialect.PostgreSQL81Dialect");
         return properties;
     }
 }
