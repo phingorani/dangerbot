@@ -79,6 +79,10 @@ public class RollListener implements MessageCreateListener {
 
         GameSession gameSession = exists.get();
 
+        if(!gameSession.getAcceptedInd()) {
+            return;
+        }
+
         if ((gameSession.getChallengerTurn() && gameSession.getChallengerId() == event.getMessageAuthor().getId()) ||
                 (gameSession.getChallengedTurn() && gameSession.getChallengedId() == event.getMessageAuthor().getId())) {
             Integer upperLimit = extractUpperLimit(event.getMessageContent());
