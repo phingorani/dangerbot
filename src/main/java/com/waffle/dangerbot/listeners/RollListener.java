@@ -120,6 +120,10 @@ public class RollListener implements MessageCreateListener {
     }
 
     private void sendLoserMessage(MessageCreateEvent event) {
+        Optional<GameSession> exists = Optional.ofNullable(gameSessionService.findByChallengerIdOrChallengedIdAndAcceptedInd(event.getMessageAuthor().getId()));
+
+        gameSessionService.delete(exists.get());
+
         MessageBuilder messageBuilder = new MessageBuilder();
         messageBuilder.append("<@" + event.getMessageAuthor().getId() + ">! You rolled a 1! You lose!");
 
