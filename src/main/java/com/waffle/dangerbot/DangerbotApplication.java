@@ -37,8 +37,6 @@ public class DangerbotApplication {
         // Insert your bot's token here
         String token = System.getenv("DISCORD_TOKEN");
 
-        System.out.println(token);
-
         DiscordApi api = new DiscordApiBuilder().setToken(token).login().join();
 
         //Print server Name
@@ -46,7 +44,10 @@ public class DangerbotApplication {
             System.out.println("Server Name: "+server.getName());
         });
 
-        // Add a listener \
+        // Print the invite url of your bot
+        System.out.println("You can invite the bot by using the following url: " + api.createBotInvite());
+
+        // Add a listener
         api.addListener(rollListener);
         api.addListener(botCommandListener);
         api.addListener(welcomeListener);

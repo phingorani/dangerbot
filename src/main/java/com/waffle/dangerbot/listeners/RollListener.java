@@ -7,6 +7,7 @@ import com.waffle.dangerbot.service.GameSessionService;
 import com.waffle.dangerbot.utilService.BotUtilService;
 import org.javacord.api.entity.message.MessageBuilder;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
+import org.javacord.api.entity.user.User;
 import org.javacord.api.event.message.MessageCreateEvent;
 import org.javacord.api.listener.message.MessageCreateListener;
 
@@ -17,6 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 @Component
 public class RollListener implements MessageCreateListener {
@@ -67,6 +69,10 @@ public class RollListener implements MessageCreateListener {
     }
 
     private void createRollSession(MessageCreateEvent event) {
+
+        addMessageAuthorToDB(event);
+        addMessageMentionsToDB(event);
+
         Optional<GameSession> exists = Optional.ofNullable(gameSessionService.findGameSessionByChallengedIdOrChallengerId(event.getMessageAuthor().getId()));
 
         if (exists.isEmpty()) {
@@ -88,6 +94,23 @@ public class RollListener implements MessageCreateListener {
                 gameSessionService.save(gameSession);
                 sendRegularMessage(event, result, upperLimit.toString());
             }
+        }
+    }
+
+    private void addMessageMentionsToDB(MessageCreateEvent event) {
+        event.getMessage().getMentionedUsers().stream().forEach(user->{
+            Optional<DiscordUser> maybe = Optional.ofNullable(discordUserService.findByDiscordId(user.getId()));
+            if(maybe.isEmpty()) {
+                discordUserService.save(new DiscordUser(user.getName(), user.getId()));
+            }
+        });
+
+    }
+
+    private void addMessageAuthorToDB(MessageCreateEvent event) {
+        Optional<DiscordUser> author = Optional.ofNullable(discordUserService.findByDiscordId(event.getMessageAuthor().getId()));
+        if(author.isEmpty()) {
+            discordUserService.save(new DiscordUser(event.getMessageAuthor().getDisplayName(),event.getMessageAuthor().getId()));
         }
     }
 

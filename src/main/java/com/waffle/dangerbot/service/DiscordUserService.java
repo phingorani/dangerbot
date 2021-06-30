@@ -5,6 +5,8 @@ import com.waffle.dangerbot.repository.DiscordUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class DiscordUserService {
 
@@ -21,5 +23,9 @@ public class DiscordUserService {
 
     public DiscordUser findByDiscordId(long id) {
        return discordUserRepository.findByDiscordId(id);
+    }
+
+    public List<DiscordUser> findByDiscordIds(List<Long> userIdsMentioned) {
+        return discordUserRepository.findAllById(userIdsMentioned);
     }
 }
