@@ -81,18 +81,12 @@ public class RollListener implements MessageCreateListener {
     }
 
     private void sendRegularMessage(MessageCreateEvent event, String result, String upperLimit) {
-        System.out.println("User: " + event.getMessageAuthor().getDisplayName() + " " + event.getMessageAuthor().getId());
         event.getChannel().sendMessage("<@" + event.getMessageAuthor().getId() + "> rolled a " + result + " out of " + upperLimit);
 
-        if(userService == null) {
-            System.out.println("User Repo is null");
-        }
-        else {
-            Optional<DiscordUser> exists = Optional.ofNullable(userService.findByDiscordId(event.getMessageAuthor().getId()));
-            if (exists.isEmpty()) {
-                DiscordUser discordUserToSave = new DiscordUser(null, event.getMessageAuthor().getDisplayName(), event.getMessageAuthor().getId());
-                userService.save(discordUserToSave);
-            }
+        Optional<DiscordUser> exists = Optional.ofNullable(userService.findByDiscordId(event.getMessageAuthor().getId()));
+        if (exists.isEmpty()) {
+            DiscordUser discordUserToSave = new DiscordUser(null, event.getMessageAuthor().getDisplayName(), event.getMessageAuthor().getId());
+            userService.save(discordUserToSave);
         }
     }
 }

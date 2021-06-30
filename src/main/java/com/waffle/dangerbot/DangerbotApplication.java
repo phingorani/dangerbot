@@ -2,6 +2,7 @@ package com.waffle.dangerbot;
 
 import com.waffle.dangerbot.listeners.BotCommandListener;
 import com.waffle.dangerbot.listeners.RollListener;
+import com.waffle.dangerbot.listeners.WelcomeListener;
 import org.javacord.api.DiscordApi;
 import org.javacord.api.DiscordApiBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ public class DangerbotApplication {
 
     @Autowired
     private BotCommandListener botCommandListener;
+
+    @Autowired
+    private WelcomeListener welcomeListener;
 
     public static void main(String[] args) {
 
@@ -45,6 +49,7 @@ public class DangerbotApplication {
         // Add a listener \
         api.addListener(rollListener);
         api.addListener(botCommandListener);
+        api.addListener(welcomeListener);
     }
 
 }
