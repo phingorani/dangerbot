@@ -4,25 +4,32 @@ import com.waffle.dangerbot.listeners.BotCommandListener;
 import com.waffle.dangerbot.listeners.RollListener;
 import org.javacord.api.DiscordApi;
 import org.javacord.api.DiscordApiBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.event.EventListener;
 
 
 @SpringBootApplication
 public class DangerbotApplication {
 
+    @Autowired
+    private RollListener rollListener;
+
+    @Autowired
+    private BotCommandListener botCommandListener;
+
     public static void main(String[] args) {
 
         ApplicationContext applicationContext = SpringApplication.run(DangerbotApplication.class, args);
 
-        for (String name : applicationContext.getBeanDefinitionNames()) {
-            System.out.println("Bean Name: "+name);
-        }
 
+    }
+
+    @EventListener(ApplicationReadyEvent.class)
+    public void startApp() {
         // Insert your bot's token here
         String token = System.getenv("DISCORD_TOKEN");
 
@@ -36,8 +43,8 @@ public class DangerbotApplication {
         });
 
         // Add a listener \
-        api.addListener(new RollListener());
-        api.addListener(new BotCommandListener());
+        api.addListener(rollListener);
+        api.addListener(botCommandListener);
     }
 
 }
