@@ -11,6 +11,6 @@ public interface GameSessionRepository extends JpaRepository<GameSession, Long> 
 
     GameSession findGameSessionByChallengedId(long challengedId);
 
-    @Query("SELECT g.game_session_id, g.bet_amount, g.challenger_id, g.challenged_id, g.accepted_ind FROM game_session g WHERE (g.challenged_id=?2 OR g.challenged_id=?1) AND g.accpted_ind=?3")
-    GameSession findGameSessionByChallengedIdOrChallengerId(long challengedId, long challengerId, Boolean acceptedInd);
+    @Query(name="SELECT g.game_session_id, g.bet_amount, g.challenger_id, g.challenged_id, g.accepted_ind FROM game_session g WHERE (g.challenged_id=:challengedId OR g.challenged_id=:challengerId) AND g.accpted_ind=TRUE", nativeQuery = true)
+    GameSession findGameSessionByChallengedIdOrChallengerId(long challengedId, long challengerId);
 }
