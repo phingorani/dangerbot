@@ -32,7 +32,7 @@ public class BotUtilService {
     }
 
     public static Boolean isDeleteChallengeCommand(MessageCreateEvent event) {
-        return event.getMessageContent().equalsIgnoreCase("!"+BotCommandsConstant.DELETE_CHALLENGE);
+        return event.getMessageContent().equalsIgnoreCase("!"+BotCommandsConstant.DECLINE_CHALLENGE);
     }
 
     public static Boolean isCorrectChannel(MessageCreateEvent event, Long channelId) {

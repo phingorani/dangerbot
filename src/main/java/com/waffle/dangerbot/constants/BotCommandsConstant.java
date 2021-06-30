@@ -6,7 +6,7 @@ public class BotCommandsConstant {
 
     public static String CHALLENGE = "challenge";
 
-    public static String DELETE_CHALLENGE = "delete";
+    public static String DECLINE_CHALLENGE = "decline";
 
     public static String ACCEPT_CHALLENGE = "accept";
 

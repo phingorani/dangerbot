@@ -48,7 +48,7 @@ public class RollListener implements MessageCreateListener {
     }
 
     private void deleteRollSession(MessageCreateEvent event) {
-        Optional<GameSession> exists = Optional.ofNullable(gameSessionService.findByChallengerId(event.getMessageAuthor().getId()));
+        Optional<GameSession> exists = Optional.ofNullable(gameSessionService.findGameSessionByChallengedIdOrChallengerId(event.getMessageAuthor().getId()));
 
         if (exists.isPresent()) {
             gameSessionService.delete(exists.get());
@@ -159,10 +159,19 @@ public class RollListener implements MessageCreateListener {
     private void sendLoserMessage(MessageCreateEvent event) {
         Optional<GameSession> exists = Optional.ofNullable(gameSessionService.findGameSessionByChallengedIdOrChallengerId(event.getMessageAuthor().getId()));
 
+        Long winnerId;
+
+        if(event.getMessageAuthor().getId()==exists.get().getChallengerId()) {
+            winnerId = exists.get().getChallengedId();
+        }
+        else {
+            winnerId = exists.get().getChallengerId();
+        }
+
         gameSessionService.delete(exists.get());
 
         MessageBuilder messageBuilder = new MessageBuilder();
-        messageBuilder.append("<@" + event.getMessageAuthor().getId() + ">! You rolled a 1! You lose!");
+        messageBuilder.append("<@" + event.getMessageAuthor().getId() + ">! You rolled a 1! All your bases are belong to <@"+ winnerId + ">");
 
         EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setImage("https://media1.tenor.com/images/7066494e5810e5a84d68d5696004eec4/tenor.gif?itemid=7465431");
