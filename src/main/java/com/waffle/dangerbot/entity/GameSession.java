@@ -23,6 +23,28 @@ public class GameSession {
     @Column(name = "accepted_ind")
     private Boolean acceptedInd;
 
+    @Column(name = "challenger_turn")
+    private Boolean challengerTurn;
+
+    @Column(name = "challenged_turn")
+    private Boolean challengedTurn;
+
+    public Boolean getChallengerTurn() {
+        return challengerTurn;
+    }
+
+    public void setChallengerTurn(Boolean challengerTurn) {
+        this.challengerTurn = challengerTurn;
+    }
+
+    public Boolean getChallengedTurn() {
+        return challengedTurn;
+    }
+
+    public void setChallengedTurn(Boolean challengedTurn) {
+        this.challengedTurn = challengedTurn;
+    }
+
     public Boolean getAcceptedInd() {
         return acceptedInd;
     }

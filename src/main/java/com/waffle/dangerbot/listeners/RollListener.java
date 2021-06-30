@@ -52,35 +52,42 @@ public class RollListener implements MessageCreateListener {
 
         if (exists.isPresent()) {
             gameSessionService.delete(exists.get());
-            event.getChannel().sendMessage("<@" + event.getMessageAuthor().getId() + "> challenge with <@"+exists.get().getChallengedId() +"> deleted Quitter!");
+            event.getChannel().sendMessage("<@" + event.getMessageAuthor().getId() + "> challenge with <@" + exists.get().getChallengedId() + "> deleted Quitter!");
         }
     }
 
     private void acceptChallengeSession(MessageCreateEvent event) {
         Optional<GameSession> exists = Optional.ofNullable(gameSessionService.findByChallengedId(event.getMessageAuthor().getId()));
-        if(exists.isPresent()) {
+        if (exists.isPresent()) {
             GameSession gameSessionToUpdate = exists.get();
             gameSessionToUpdate.setAcceptedInd(Boolean.TRUE);
             gameSessionService.save(gameSessionToUpdate);
-            event.getChannel().sendMessage("Challenge Accepted! <@" + gameSessionToUpdate.getChallengerId() + "> and <@"+exists.get().getChallengedId() +">, get ready to roll! May the best Kegz win!");
+            event.getChannel().sendMessage("Challenge Accepted! <@" + gameSessionToUpdate.getChallengerId() + "> and <@" + exists.get().getChallengedId() + ">, get ready to roll! May the best Kegz win!");
         }
     }
 
     private void createRollSession(MessageCreateEvent event) {
         Optional<GameSession> exists = Optional.ofNullable(gameSessionService.findGameSessionByChallengedIdOrChallengerId(event.getMessageAuthor().getId()));
 
-        if(exists.isEmpty()) {
+        if (exists.isEmpty()) {
             return;
         }
+        GameSession gameSession = exists.get();
 
-        Integer upperLimit = extractUpperLimit(event.getMessageContent());
+        if ((gameSession.getChallengerTurn() && gameSession.getChallengerId() == event.getMessageAuthor().getId()) ||
+                (gameSession.getChallengedTurn() && gameSession.getChallengedId() == event.getMessageAuthor().getId())) {
+            Integer upperLimit = extractUpperLimit(event.getMessageContent());
 
-        String result = randomNumberGenerator(upperLimit).toString();
+            String result = randomNumberGenerator(upperLimit).toString();
 
-        if (result.equals("1")) {
-            sendLoserMessage(event);
-        } else {
-            sendRegularMessage(event, result, upperLimit.toString());
+            if (result.equals("1")) {
+                sendLoserMessage(event);
+            } else {
+                gameSession.setChallengedTurn(!gameSession.getChallengedTurn());
+                gameSession.setChallengerTurn(!gameSession.getChallengerTurn());
+                gameSessionService.save(gameSession);
+                sendRegularMessage(event, result, upperLimit.toString());
+            }
         }
     }
 
