@@ -11,14 +11,13 @@ import org.javacord.api.listener.message.MessageCreateListener;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
-@Controller
+@Component
 public class RollListener implements MessageCreateListener {
 
     Boolean isBotRollCommand = Boolean.FALSE;

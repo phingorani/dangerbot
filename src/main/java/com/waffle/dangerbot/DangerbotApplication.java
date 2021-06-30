@@ -8,17 +8,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 
 
 @SpringBootApplication
 public class DangerbotApplication {
 
-    private static final Logger logger = LoggerFactory.getLogger(DangerbotApplication.class);
-
     public static void main(String[] args) {
 
-        SpringApplication.run(DangerbotApplication.class, args);
+        ApplicationContext applicationContext = SpringApplication.run(DangerbotApplication.class, args);
+
+        for (String name : applicationContext.getBeanDefinitionNames()) {
+            System.out.println("Bean Name: "+name);
+        }
 
         // Insert your bot's token here
         String token = System.getenv("DISCORD_TOKEN");
