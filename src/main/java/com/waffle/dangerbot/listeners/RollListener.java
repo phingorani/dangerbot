@@ -97,10 +97,7 @@ public class RollListener implements MessageCreateListener {
         gameSessionToSave.setChallengedId(event.getMessage().getMentionedUsers().get(0).getId());
         gameSessionToSave.setBetAmount(Integer.parseInt(event.getMessageContent().split(" ")[2]));
         gameSessionToSave.setAcceptedInd(Boolean.FALSE);
-
         gameSessionService.save(gameSessionToSave);
-
-        Arrays.asList(event.getMessageContent().split(" ")).forEach(System.out::println);
     }
 
     private Integer extractUpperLimit(String messageContent) {

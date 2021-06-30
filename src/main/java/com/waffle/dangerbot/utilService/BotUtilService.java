@@ -15,7 +15,7 @@ public class BotUtilService {
     }
 
     public static Boolean isRollCommand(MessageCreateEvent event) {
-        return event.getMessageContent().equalsIgnoreCase("!"+BotCommandsConstant.ROLL);
+        return event.getMessageContent().toUpperCase().startsWith("!"+BotCommandsConstant.ROLL.toUpperCase());
     }
 
     public static Boolean isChallengeCommand(MessageCreateEvent event) {
