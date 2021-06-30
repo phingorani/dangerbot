@@ -30,10 +30,7 @@ public class DangerbotApplication {
     private UpdateUsersListener updateUsersListener;
 
     public static void main(String[] args) {
-
         ApplicationContext applicationContext = SpringApplication.run(DangerbotApplication.class, args);
-
-
     }
 
     @EventListener(ApplicationReadyEvent.class)

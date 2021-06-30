@@ -10,6 +10,8 @@ public class BotCommandsConstant {
 
     public static String ACCEPT_CHALLENGE = "accept";
 
+    public static String UPDATE_USER_LIST = "updateUserList";
+
     public static String VERSION = "version";
 
 }

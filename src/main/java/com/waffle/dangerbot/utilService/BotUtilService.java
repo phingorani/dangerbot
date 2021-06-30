@@ -1,6 +1,7 @@
 package com.waffle.dangerbot.utilService;
 
 import com.waffle.dangerbot.constants.BotCommandsConstant;
+import com.waffle.dangerbot.constants.UserIdConstants;
 import org.apache.commons.lang3.StringUtils;
 import org.javacord.api.event.message.MessageCreateEvent;
 
@@ -40,5 +41,13 @@ public class BotUtilService {
 
     public static boolean isAcceptChallengeCommand(MessageCreateEvent event) {
         return event.getMessageContent().equalsIgnoreCase("!"+BotCommandsConstant.ACCEPT_CHALLENGE);
+    }
+
+    public static boolean isAdmin(MessageCreateEvent event) {
+        return UserIdConstants.getADMINS().contains(event.getMessageAuthor().getId());
+    }
+
+    public static boolean isUpdateUsers(MessageCreateEvent event) {
+        return event.getMessageContent().replace("!","").equalsIgnoreCase(BotCommandsConstant.UPDATE_USER_LIST);
     }
 }
