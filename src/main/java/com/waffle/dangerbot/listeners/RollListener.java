@@ -40,7 +40,7 @@ public class RollListener implements MessageCreateListener {
             createChallengeSession(event);
         } else if (BotUtilService.isRollCommand(event)) {
             createRollSession(event);
-        } else if(BotUtilService.isDeleteCommand(event)) {
+        } else if(BotUtilService.isDeleteChallengeCommand(event)) {
             deleteRollSession(event);
         }
     }

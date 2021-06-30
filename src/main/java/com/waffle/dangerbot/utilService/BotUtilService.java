@@ -30,8 +30,8 @@ public class BotUtilService {
         return event.getMessageContent().split(" ")[0].equalsIgnoreCase("!"+BotCommandsConstant.CHALLENGE);
     }
 
-    public static Boolean isDeleteCommand(MessageCreateEvent event) {
-        return event.getMessageContent().split(" ")[1].equalsIgnoreCase(BotCommandsConstant.DELETE);
+    public static Boolean isDeleteChallengeCommand(MessageCreateEvent event) {
+        return event.getMessageContent().equalsIgnoreCase("!"+BotCommandsConstant.DELETE_CHALLENGE);
     }
 
     public static Boolean isCorrectChannel(MessageCreateEvent event, Long channelId) {
