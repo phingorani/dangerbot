@@ -47,7 +47,6 @@ public class DatabaseConfig {
 
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
-        em.setJpaProperties(additionalProperties());
 
         return em;
     }
@@ -67,8 +66,8 @@ public class DatabaseConfig {
 
     Properties additionalProperties() {
         Properties properties = new Properties();
-        properties.setProperty("hibernate.hbm2ddl.auto","create-drop");
-        properties.setProperty("hibernate.dialect","org.hibernate.dialect.PostgreSQL13Dialect");
+        properties.setProperty("hibernate.hbm2ddl.auto","update");
+        properties.setProperty("hibernate.dialect","org.hibernate.dialect.HSQLDialect");
         return properties;
     }
 }
