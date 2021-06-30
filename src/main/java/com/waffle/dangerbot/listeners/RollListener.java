@@ -68,11 +68,13 @@ public class RollListener implements MessageCreateListener {
     }
 
     private void createChallengeSession(MessageCreateEvent event) {
+
         Optional<GameSession> exists = Optional.ofNullable(gameSessionService.findByChallengerId(event.getMessageAuthor().getId()));
         if (exists.isPresent()) {
             event.getChannel().sendMessage("<@" + event.getMessageAuthor().getId() + "> You already have an active challenge with <@" + exists.get().getChallengedId() + "> If you'd like to quit type command !delete");
             return;
         }
+        event.getChannel().sendMessage("<@" + event.getMessageAuthor().getId() + "> You challenged <@" + event.getMessage().getMentionedUsers().get(0).getId() + "> for "+ event.getMessageContent().split(" ")[2].toUpperCase()+" gold!");
         System.out.println(event.getMessageContent());
     }
 
