@@ -67,7 +67,7 @@ public class RollListener implements MessageCreateListener {
     }
 
     private void createRollSession(MessageCreateEvent event) {
-        Optional<GameSession> exists = Optional.ofNullable(gameSessionService.findByChallengerIdOrChallengedIdAndAcceptedInd(event.getMessageAuthor().getId()));
+        Optional<GameSession> exists = Optional.ofNullable(gameSessionService.findGameSessionByChallengedIdOrChallengerId(event.getMessageAuthor().getId()));
 
         if(exists.isEmpty()) {
             return;
@@ -120,7 +120,7 @@ public class RollListener implements MessageCreateListener {
     }
 
     private void sendLoserMessage(MessageCreateEvent event) {
-        Optional<GameSession> exists = Optional.ofNullable(gameSessionService.findByChallengerIdOrChallengedIdAndAcceptedInd(event.getMessageAuthor().getId()));
+        Optional<GameSession> exists = Optional.ofNullable(gameSessionService.findGameSessionByChallengedIdOrChallengerId(event.getMessageAuthor().getId()));
 
         gameSessionService.delete(exists.get());
 
