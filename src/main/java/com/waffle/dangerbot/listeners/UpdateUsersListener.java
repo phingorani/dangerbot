@@ -19,7 +19,6 @@ public class UpdateUsersListener implements MessageCreateListener {
         if (BotUtilService.isValidateBotCommand(event)) {
             if (BotUtilService.isAdmin(event) && BotUtilService.isUpdateUsers(event)) {
                 event.getServer().get().getMembers().forEach(user -> {
-                    System.out.println(user.getName());
                     if (discordUserRepository.existsById(user.getId())) {
                         DiscordUser discordUser = new DiscordUser();
                         discordUser.setDisplayName(user.getName());

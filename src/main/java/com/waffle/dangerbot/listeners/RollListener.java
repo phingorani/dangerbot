@@ -7,7 +7,6 @@ import com.waffle.dangerbot.service.GameSessionService;
 import com.waffle.dangerbot.utilService.BotUtilService;
 import org.javacord.api.entity.message.MessageBuilder;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
-import org.javacord.api.entity.user.User;
 import org.javacord.api.event.message.MessageCreateEvent;
 import org.javacord.api.listener.message.MessageCreateListener;
 
@@ -18,7 +17,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 @Component
 public class RollListener implements MessageCreateListener {
@@ -78,6 +76,7 @@ public class RollListener implements MessageCreateListener {
         if (exists.isEmpty()) {
             return;
         }
+
         GameSession gameSession = exists.get();
 
         if ((gameSession.getChallengerTurn() && gameSession.getChallengerId() == event.getMessageAuthor().getId()) ||
@@ -121,6 +120,9 @@ public class RollListener implements MessageCreateListener {
     }
 
     private void createChallengeSession(MessageCreateEvent event) {
+
+        addMessageAuthorToDB(event);
+        addMessageMentionsToDB(event);
 
         Optional<GameSession> exists = Optional.ofNullable(gameSessionService.findByChallengerId(event.getMessageAuthor().getId()));
         if (exists.isPresent()) {
