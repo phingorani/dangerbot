@@ -12,9 +12,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.event.EventListener;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 
 @SpringBootApplication
+@EnableAsync
 public class DangerbotApplication {
 
     @Autowired

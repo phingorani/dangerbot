@@ -11,6 +11,7 @@ import org.javacord.api.listener.message.MessageCreateListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -34,7 +35,8 @@ public class UpdateUsersListener implements MessageCreateListener {
         }
     }
 
-    private void getUsersFromDiscord(MessageCreateEvent event) {
+    @Async
+    void getUsersFromDiscord(MessageCreateEvent event) {
 
         RestTemplate restTemplate = new RestTemplate();
 
