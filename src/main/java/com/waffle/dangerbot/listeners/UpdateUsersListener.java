@@ -46,7 +46,7 @@ public class UpdateUsersListener implements MessageCreateListener {
         String baseUrl = System.getenv("DISCORD_API_URL");
 
         HttpHeaders headers = new HttpHeaders();
-        headers.set("authorization", event.getApi().getToken());
+        headers.set("authorization", "Bot "+event.getApi().getToken());
         headers.set("Accept", "application/json");
         HttpEntity entity = new HttpEntity(headers);
 
