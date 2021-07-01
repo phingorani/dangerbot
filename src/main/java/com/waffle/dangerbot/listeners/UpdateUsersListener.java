@@ -30,18 +30,7 @@ public class UpdateUsersListener implements MessageCreateListener {
 
         if (BotUtilService.isValidateBotCommand(event)) {
             if (BotUtilService.isAdmin(event) && BotUtilService.isUpdateUsers(event)) {
-
                 getUsersFromDiscord(event);
-
-                event.getServer().get().getRoles().forEach(role -> System.out.println(role.getName()));
-                event.getServer().get().getMembers().forEach(user -> {
-                    if (discordUserRepository.existsById(user.getId())) {
-                        DiscordUser discordUser = new DiscordUser();
-                        discordUser.setDisplayName(user.getName());
-                        discordUser.setDiscordId(user.getId());
-                        discordUserRepository.save(discordUser);
-                    }
-                });
             }
         }
     }
@@ -67,6 +56,18 @@ public class UpdateUsersListener implements MessageCreateListener {
                 = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, new ParameterizedTypeReference<List<UserBasePojo>>() {
         });
 
-       response.getBody().stream().forEach(userBasePojo -> System.out.println(userBasePojo.user.username));
+       response.getBody().stream().forEach(userBasePojo -> {
+           if (discordUserRepository.existsById(userBasePojo.user.id)) {
+               DiscordUser discordUser = new DiscordUser();
+               if(userBasePojo.nick.isEmpty()) {
+                   discordUser.setDisplayName(userBasePojo.user.username);
+               }
+               else {
+                   discordUser.setDisplayName(userBasePojo.nick);
+               }
+               discordUser.setDiscordId(userBasePojo.user.id);
+               discordUserRepository.save(discordUser);
+           }
+       });
     }
 }
