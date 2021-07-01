@@ -21,6 +21,26 @@ public class UpdateUsersListener implements MessageCreateListener {
     @Override
     public void onMessageCreate(MessageCreateEvent event) {
 
+        if (BotUtilService.isValidateBotCommand(event)) {
+            if (BotUtilService.isAdmin(event) && BotUtilService.isUpdateUsers(event)) {
+
+                getUsersFromDiscord(event);
+
+                event.getServer().get().getRoles().forEach(role -> System.out.println(role.getName()));
+                event.getServer().get().getMembers().forEach(user -> {
+                    if (discordUserRepository.existsById(user.getId())) {
+                        DiscordUser discordUser = new DiscordUser();
+                        discordUser.setDisplayName(user.getName());
+                        discordUser.setDiscordId(user.getId());
+                        discordUserRepository.save(discordUser);
+                    }
+                });
+            }
+        }
+    }
+
+    private void getUsersFromDiscord(MessageCreateEvent event) {
+
         RestTemplate restTemplate = new RestTemplate();
 
         String baseUrl = System.getenv("DISCORD_API_URL");
@@ -33,7 +53,7 @@ public class UpdateUsersListener implements MessageCreateListener {
         String fooResourceUrl
                 = baseUrl+"/guilds/"+event.getServer().get().getId()+"/members";
 
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(baseUrl);
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(fooResourceUrl);
         builder.queryParam("limit", 1000);
 
 
@@ -41,19 +61,5 @@ public class UpdateUsersListener implements MessageCreateListener {
                 = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity,User.class);
 
         System.out.println(response.getBody());
-
-        if (BotUtilService.isValidateBotCommand(event)) {
-            if (BotUtilService.isAdmin(event) && BotUtilService.isUpdateUsers(event)) {
-                event.getServer().get().getRoles().forEach(role -> System.out.println(role.getName()));
-                event.getServer().get().getMembers().forEach(user -> {
-                    if (discordUserRepository.existsById(user.getId())) {
-                        DiscordUser discordUser = new DiscordUser();
-                        discordUser.setDisplayName(user.getName());
-                        discordUser.setDiscordId(user.getId());
-                        discordUserRepository.save(discordUser);
-                    }
-                });
-            }
-        }
     }
 }
