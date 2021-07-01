@@ -1,16 +1,23 @@
 package com.waffle.dangerbot.listeners;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.waffle.dangerbot.entity.DiscordUser;
+import com.waffle.dangerbot.pojos.UserBasePojo;
+import com.waffle.dangerbot.pojos.UserBasePojoList;
 import com.waffle.dangerbot.repository.DiscordUserRepository;
 import com.waffle.dangerbot.utilService.BotUtilService;
-import org.javacord.api.entity.user.User;
 import org.javacord.api.event.message.MessageCreateEvent;
 import org.javacord.api.listener.message.MessageCreateListener;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import java.lang.reflect.Type;
+import java.util.List;
 
 @Component
 public class UpdateUsersListener implements MessageCreateListener {
@@ -56,9 +63,10 @@ public class UpdateUsersListener implements MessageCreateListener {
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(fooResourceUrl);
         builder.queryParam("limit", 1000);
 
-        System.out.println(fooResourceUrl);
+        ResponseEntity<List<UserBasePojo>> response
+                = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, new ParameterizedTypeReference<List<UserBasePojo>>() {
+        });
 
-        ResponseEntity<?> response
-                = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity,User.class);
+       response.getBody().stream().forEach(userBasePojo -> System.out.println(userBasePojo.user.username));
     }
 }

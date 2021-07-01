@@ -44,6 +44,7 @@ repositories {
 
 dependencies {
     implementation 'org.javacord:javacord:3.3.0'
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.12.3'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     runtimeOnly 'org.springframework.boot:spring-boot-starter-tomcat'
     implementation 'org.springframework.boot:spring-boot-starter-web-services'
