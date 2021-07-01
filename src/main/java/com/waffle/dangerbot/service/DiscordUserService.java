@@ -7,6 +7,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -42,8 +44,10 @@ public class DiscordUserService {
                     discordUser.setDisplayName(userBasePojo.nick);
                 }
                 discordUser.setDiscordId(userBasePojo.user.id);
-                System.out.println(discordUser.getDiscordId() + " + " + discordUser.getDisplayName());
                 discordUserRepository.save(discordUser);
+                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                Date date = new Date();
+                System.out.println(discordUser.getDisplayName() + "   :    "+formatter.format(date));
             }
         });
     }
