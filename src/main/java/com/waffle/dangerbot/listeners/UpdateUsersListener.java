@@ -56,10 +56,9 @@ public class UpdateUsersListener implements MessageCreateListener {
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(fooResourceUrl);
         builder.queryParam("limit", 1000);
 
+        System.out.println(fooResourceUrl);
 
         ResponseEntity<?> response
                 = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity,User.class);
-
-        System.out.println(fooResourceUrl);
     }
 }
