@@ -60,6 +60,6 @@ public class UpdateUsersListener implements MessageCreateListener {
         ResponseEntity<?> response
                 = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity,User.class);
 
-        System.out.println(response.getBody());
+        System.out.println(fooResourceUrl);
     }
 }
