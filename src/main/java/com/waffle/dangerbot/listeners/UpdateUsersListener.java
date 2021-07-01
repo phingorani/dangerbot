@@ -63,6 +63,7 @@ public class UpdateUsersListener implements MessageCreateListener {
                    discordUser.setDisplayName(userBasePojo.nick);
                }
                discordUser.setDiscordId(userBasePojo.user.id);
+               System.out.println(discordUser.getDiscordId() + " + " + discordUser.getDisplayName());
                discordUserRepository.save(discordUser);
            }
        });
