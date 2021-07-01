@@ -12,11 +12,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.event.EventListener;
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.web.client.RestTemplate;
 
 
 @SpringBootApplication
-@EnableAsync
 public class DangerbotApplication {
 
     @Autowired
@@ -31,6 +32,7 @@ public class DangerbotApplication {
     @Autowired
     private UpdateUsersListener updateUsersListener;
 
+
     public static void main(String[] args) {
         ApplicationContext applicationContext = SpringApplication.run(DangerbotApplication.class, args);
     }
@@ -40,11 +42,20 @@ public class DangerbotApplication {
         // Insert your bot's token here
         String token = System.getenv("DISCORD_TOKEN");
 
-        DiscordApi api = new DiscordApiBuilder().setToken(token).login().join();
+        DiscordApi api = new DiscordApiBuilder()
+                .setToken(token)
+                .setAllIntents()
+                .login()
+                .join();
 
         //Print server Name
         api.getServers().forEach(server -> {
             System.out.println("Server Name: "+server.getName());
+            RestTemplate restTemplate = new RestTemplate();
+            String fooResourceUrl
+                    = System.getenv("APP_BASE_URL")+"updateUserList/"+server.getId();
+            ResponseEntity<?> response
+                    = restTemplate.getForEntity(fooResourceUrl,Object.class);
         });
 
         // Print the invite url of your bot
@@ -55,6 +66,7 @@ public class DangerbotApplication {
         api.addListener(botCommandListener);
         api.addListener(welcomeListener);
         api.addListener(updateUsersListener);
+
     }
 
 }

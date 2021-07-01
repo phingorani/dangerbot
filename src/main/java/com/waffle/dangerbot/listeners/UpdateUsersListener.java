@@ -35,8 +35,7 @@ public class UpdateUsersListener implements MessageCreateListener {
         }
     }
 
-    @Async
-    void getUsersFromDiscord(MessageCreateEvent event) {
+    private void getUsersFromDiscord(MessageCreateEvent event) {
 
         RestTemplate restTemplate = new RestTemplate();
 
