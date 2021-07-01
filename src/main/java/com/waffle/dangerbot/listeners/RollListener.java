@@ -1,8 +1,6 @@
 package com.waffle.dangerbot.listeners;
 
-import com.waffle.dangerbot.entity.DiscordUser;
 import com.waffle.dangerbot.entity.GameSession;
-import com.waffle.dangerbot.service.DiscordUserService;
 import com.waffle.dangerbot.service.GameSessionService;
 import com.waffle.dangerbot.utilService.BotUtilService;
 import org.javacord.api.entity.message.MessageBuilder;
@@ -22,9 +20,6 @@ import java.util.Random;
 public class RollListener implements MessageCreateListener {
 
     Long channelId = 857362959109586984L;
-
-    @Autowired
-    private DiscordUserService discordUserService;
 
     @Autowired
     private GameSessionService gameSessionService;
@@ -75,9 +70,6 @@ public class RollListener implements MessageCreateListener {
 
     private void createRollSession(MessageCreateEvent event) {
 
-        addMessageAuthorToDB(event);
-        addMessageMentionsToDB(event);
-
         Optional<GameSession> exists = Optional.ofNullable(gameSessionService.findGameSessionByChallengedIdOrChallengerId(event.getMessageAuthor().getId()));
 
         if (exists.isEmpty()) {
@@ -107,33 +99,7 @@ public class RollListener implements MessageCreateListener {
         }
     }
 
-    private void addMessageMentionsToDB(MessageCreateEvent event) {
-        event.getMessage().getMentionedUsers().stream().forEach(user->{
-            Optional<DiscordUser> maybe = Optional.ofNullable(discordUserService.findByDiscordId(user.getId()));
-            if(maybe.isEmpty()) {
-                DiscordUser discordUser = new DiscordUser();
-                discordUser.setDiscordId(user.getId());
-                discordUser.setDisplayName(user.getName());
-                discordUserService.save(discordUser);
-            }
-        });
-
-    }
-
-    private void addMessageAuthorToDB(MessageCreateEvent event) {
-        Optional<DiscordUser> author = Optional.ofNullable(discordUserService.findByDiscordId(event.getMessageAuthor().getId()));
-        if(author.isEmpty()) {
-            DiscordUser discordUser = new DiscordUser();
-            discordUser.setDiscordId(event.getMessageAuthor().getId());
-            discordUser.setDisplayName(event.getMessageAuthor().getDisplayName());
-            discordUserService.save(discordUser);
-        }
-    }
-
     private void createChallengeSession(MessageCreateEvent event) {
-
-        addMessageAuthorToDB(event);
-        addMessageMentionsToDB(event);
 
         Optional<GameSession> exists = Optional.ofNullable(gameSessionService.findByChallengerId(event.getMessageAuthor().getId()));
         if (exists.isPresent()) {
@@ -192,11 +158,5 @@ public class RollListener implements MessageCreateListener {
 
     private void sendRegularMessage(MessageCreateEvent event, String result, String upperLimit) {
         event.getChannel().sendMessage("<@" + event.getMessageAuthor().getId() + "> rolled a " + result + " out of " + upperLimit);
-
-        Optional<DiscordUser> exists = Optional.ofNullable(discordUserService.findByDiscordId(event.getMessageAuthor().getId()));
-        if (exists.isEmpty()) {
-            DiscordUser discordUserToSave = new DiscordUser(event.getMessageAuthor().getDisplayName(), event.getMessageAuthor().getId());
-            discordUserService.save(discordUserToSave);
-        }
     }
 }

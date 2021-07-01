@@ -1,12 +1,10 @@
 package com.waffle.dangerbot.listeners;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.waffle.dangerbot.entity.DiscordUser;
 import com.waffle.dangerbot.pojos.UserBasePojo;
-import com.waffle.dangerbot.pojos.UserBasePojoList;
 import com.waffle.dangerbot.repository.DiscordUserRepository;
 import com.waffle.dangerbot.utilService.BotUtilService;
+import org.apache.commons.lang3.StringUtils;
 import org.javacord.api.event.message.MessageCreateEvent;
 import org.javacord.api.listener.message.MessageCreateListener;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +14,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.lang.reflect.Type;
 import java.util.List;
 
 @Component
@@ -59,7 +56,7 @@ public class UpdateUsersListener implements MessageCreateListener {
        response.getBody().stream().forEach(userBasePojo -> {
            if (discordUserRepository.existsById(userBasePojo.user.id)) {
                DiscordUser discordUser = new DiscordUser();
-               if(userBasePojo.nick.isEmpty()) {
+               if(StringUtils.isEmpty(userBasePojo.nick)) {
                    discordUser.setDisplayName(userBasePojo.user.username);
                }
                else {
