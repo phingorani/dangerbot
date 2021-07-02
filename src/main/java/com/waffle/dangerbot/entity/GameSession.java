@@ -30,7 +30,7 @@ public class GameSession {
     private Boolean challengedTurn;
 
     @Column(name = "roll_limit")
-    private Integer roleLimit;
+    private Integer rollLimit;
 
     public Boolean getChallengerTurn() {
         return challengerTurn;
@@ -88,11 +88,11 @@ public class GameSession {
         this.challengedId = challengedId;
     }
 
-    public Integer getRoleLimit() {
-        return roleLimit;
+    public Integer getRollLimit() {
+        return rollLimit;
     }
 
-    public void setRoleLimit(Integer roleLimit) {
-        this.roleLimit = roleLimit;
+    public void setRollLimit(Integer roleLimit) {
+        this.rollLimit = roleLimit;
     }
 }

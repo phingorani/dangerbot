@@ -86,10 +86,10 @@ public class RollListener implements MessageCreateListener {
                 (gameSession.getChallengedTurn() && gameSession.getChallengedId() == event.getMessageAuthor().getId())) {
 
             Integer upperLimit;
-            if(gameSession.getRoleLimit() == null) {
+            if(gameSession.getRollLimit() == null) {
                 upperLimit = 100;
             } else{
-                upperLimit = gameSession.getRoleLimit();
+                upperLimit = gameSession.getRollLimit();
             }
 
             String result = randomNumberGenerator(upperLimit).toString();
