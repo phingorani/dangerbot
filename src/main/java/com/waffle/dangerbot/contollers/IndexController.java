@@ -74,6 +74,7 @@ public class IndexController {
             } else {
                 dataLines.add(new String[]{userBasePojo.user.id.toString(), userBasePojo.nick});
             }
+            System.out.println(userBasePojo.user.username);
         });
 
         File fileToDownload = CsvDownloadUtilService.dataArrayToCSV(dataLines);
