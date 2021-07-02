@@ -84,7 +84,13 @@ public class RollListener implements MessageCreateListener {
 
         if ((gameSession.getChallengerTurn() && gameSession.getChallengerId() == event.getMessageAuthor().getId()) ||
                 (gameSession.getChallengedTurn() && gameSession.getChallengedId() == event.getMessageAuthor().getId())) {
-            Integer upperLimit = extractUpperLimit(event.getMessageContent());
+
+            Integer upperLimit;
+            if(gameSession.getRoleLimit() == null) {
+                upperLimit = 100;
+            } else{
+                upperLimit = gameSession.getRoleLimit();
+            }
 
             String result = randomNumberGenerator(upperLimit).toString();
 
@@ -101,7 +107,7 @@ public class RollListener implements MessageCreateListener {
 
     private void createChallengeSession(MessageCreateEvent event) {
 
-        Optional<GameSession> exists = Optional.ofNullable(gameSessionService.findByChallengerId(event.getMessageAuthor().getId()));
+        Optional<GameSession> exists = Optional.ofNullable(gameSessionService.findGameSessionByChallengedIdOrChallengerId(event.getMessageAuthor().getId()));
         if (exists.isPresent()) {
             event.getChannel().sendMessage("<@" + event.getMessageAuthor().getId() + "> You already have an active challenge with <@" + exists.get().getChallengedId() + "> If you'd like to quit type command !delete");
             return;
@@ -115,17 +121,6 @@ public class RollListener implements MessageCreateListener {
         gameSessionToSave.setChallengerTurn(Boolean.TRUE);
         gameSessionToSave.setChallengedTurn(Boolean.FALSE);
         gameSessionService.save(gameSessionToSave);
-    }
-
-    private Integer extractUpperLimit(String messageContent) {
-        List<String> splitStrings = Arrays.asList(messageContent.split(" "));
-
-        if (splitStrings.isEmpty() || splitStrings.size() == 1 || !splitStrings.get(1).matches("^[0-9]+$")) {
-            return 100;
-        }
-
-        String numberOnly = messageContent.replaceAll("[^0-9]", "");
-        return Integer.parseInt(numberOnly);
     }
 
     private Integer randomNumberGenerator(Integer upperLimit) {
