@@ -13,7 +13,6 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.event.EventListener;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.client.RestTemplate;
 
 
@@ -47,16 +46,6 @@ public class DangerbotApplication {
                 .setAllIntents()
                 .login()
                 .join();
-
-        //Print server Name
-        api.getServers().forEach(server -> {
-            System.out.println("Server Name: "+server.getName());
-            RestTemplate restTemplate = new RestTemplate();
-            String fooResourceUrl
-                    = System.getenv("APP_BASE_URL")+"updateUserList/"+server.getId();
-            ResponseEntity<?> response
-                    = restTemplate.getForEntity(fooResourceUrl,Object.class);
-        });
 
         // Print the invite url of your bot
         System.out.println("You can invite the bot by using the following url: " + api.createBotInvite());
