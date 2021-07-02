@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -63,9 +64,16 @@ public class IndexController {
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(fooResourceUrl);
         builder.queryParam("limit", 1000);
 
+        Date d1 = new Date();
+
+        System.out.println("Hitting URL "+builder.toUriString());
+
         ResponseEntity<List<UserBasePojo>> response
                 = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, new ParameterizedTypeReference<List<UserBasePojo>>() {
         });
+        Date d2 = new Date();
+        Long seconds = (d2.getTime()-d1.getTime());
+        System.out.println("Response at "+seconds.toString());
 
         List<String[]> dataLines = new ArrayList<>();
         response.getBody().forEach(userBasePojo -> {
