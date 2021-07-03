@@ -99,6 +99,7 @@ public class RollListener implements MessageCreateListener {
             } else {
                 gameSession.setChallengedTurn(!gameSession.getChallengedTurn());
                 gameSession.setChallengerTurn(!gameSession.getChallengerTurn());
+                gameSession.setRollLimit(Integer.parseInt(result));
                 gameSessionService.save(gameSession);
                 sendRegularMessage(event, result, upperLimit.toString());
             }
@@ -109,7 +110,15 @@ public class RollListener implements MessageCreateListener {
 
         Optional<GameSession> exists = Optional.ofNullable(gameSessionService.findGameSessionByChallengedIdOrChallengerId(event.getMessageAuthor().getId()));
         if (exists.isPresent()) {
-            event.getChannel().sendMessage("<@" + event.getMessageAuthor().getId() + "> You already have an active challenge with <@" + exists.get().getChallengedId() + "> If you'd like to quit type command !delete");
+            Long winnerId;
+
+            if(event.getMessageAuthor().getId()==exists.get().getChallengerId()) {
+                winnerId = exists.get().getChallengedId();
+            }
+            else {
+                winnerId = exists.get().getChallengerId();
+            }
+            event.getChannel().sendMessage("<@" + event.getMessageAuthor().getId() + "> You already have an active challenge with <@" + winnerId + "> If you'd like to quit type command !decline");
             return;
         }
         event.getChannel().sendMessage("<@" + event.getMessageAuthor().getId() + "> You challenged <@" + event.getMessage().getMentionedUsers().get(0).getId() + "> for " + event.getMessageContent().split(" ")[2] + " gold!");
