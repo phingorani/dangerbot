@@ -27,7 +27,7 @@ public class WelcomeListener implements ServerMemberJoinListener {
         rolesList.forEach(role -> {System.out.println(role.getId()+ "  :  "+role.getName());});
         Optional<Role> role = rolesList.stream().filter(innerRole -> innerRole.getName().equalsIgnoreCase("New")).findFirst();
         if (role.isPresent()) {
-            event.getUser().addRole(role.get());
+            role.get().addUser(event.getUser());
         }
     }
 }
