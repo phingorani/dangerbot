@@ -8,7 +8,6 @@ import org.javacord.api.listener.server.member.ServerMemberJoinListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,7 +26,7 @@ public class WelcomeListener implements ServerMemberJoinListener {
         rolesList.forEach(role -> {System.out.println(role.getId()+ "  :  "+role.getName());});
         Optional<Role> role = rolesList.stream().filter(innerRole -> innerRole.getName().equalsIgnoreCase("New")).findFirst();
         if (role.isPresent()) {
-            role.get().addUser(event.getUser());
+            event.getServer().addRoleToUser(event.getUser(),role.get());
         }
     }
 }
