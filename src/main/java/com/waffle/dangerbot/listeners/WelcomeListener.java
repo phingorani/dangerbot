@@ -3,6 +3,7 @@ package com.waffle.dangerbot.listeners;
 import com.waffle.dangerbot.entity.DiscordUser;
 import com.waffle.dangerbot.service.DiscordUserService;
 import org.javacord.api.entity.permission.Role;
+import org.javacord.api.entity.server.ServerUpdater;
 import org.javacord.api.event.server.member.ServerMemberJoinEvent;
 import org.javacord.api.listener.server.member.ServerMemberJoinListener;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +26,9 @@ public class WelcomeListener implements ServerMemberJoinListener {
         rolesList.stream().map(Role::getName);
         rolesList.forEach(role -> {System.out.println(role.getId()+ "  :  "+role.getName());});
         Optional<Role> role = rolesList.stream().filter(innerRole -> innerRole.getName().equalsIgnoreCase("New")).findFirst();
+        ServerUpdater serverUpdater = new ServerUpdater(event.getServer());
         if (role.isPresent()) {
-            event.getServer().addRoleToUser(event.getUser(),role.get());
+            serverUpdater.addRoleToUser(event.getUser(),role.get());
         }
     }
 }
