@@ -1,28 +1,16 @@
 plugins {
-    id 'org.springframework.boot' version '2.5.1'
+    id 'org.springframework.boot' version '2.5.4'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
     id 'application'
-//    id "com.github.johnrengelman.shadow" version "7.0.0"
 }
 
 
 apply plugin: 'java'
 apply plugin: 'org.springframework.boot'
-//apply plugin: 'com.github.johnrengelman.shadow'
 
 defaultTasks 'clean', 'build', 'test'
 group = 'com.waffle'
-sourceCompatibility = '11'
-
-//shadowJar {
-//    manifest {
-//        attributes 'Main-Class': 'com.waffle.dangerbot.DangerbotApplication'
-//    }
-//    archiveBaseName.set('dangerbot-all')
-//    archiveClassifier.set('')
-//    archiveVersion.set('')
-//}
 
 application {
     mainClass = 'com.waffle.dangerbot.DangerbotApplication'
@@ -43,26 +31,23 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.javacord:javacord:3.3.0'
-    implementation 'com.fasterxml.jackson.core:jackson-core:2.12.3'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    runtimeOnly 'org.springframework.boot:spring-boot-starter-tomcat'
-    implementation 'org.springframework.boot:spring-boot-starter-web-services'
-    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
-    compileOnly 'org.projectlombok:lombok'
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    runtimeOnly 'org.postgresql:postgresql'
-    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-    annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'io.projectreactor:reactor-test'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.javacord:javacord:3.3.2'
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.12.5'
+    implementation 'org.springframework.boot:spring-boot-starter-web:2.5.4'
+    runtimeOnly 'org.springframework.boot:spring-boot-starter-tomcat:2.5.4'
+    implementation 'org.springframework.boot:spring-boot-starter-web-services:2.5.4'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc:2.5.4'
+    compileOnly 'org.projectlombok:lombok:1.18.20'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools:2.5.4'
+    runtimeOnly 'org.postgresql:postgresql:42.2.23.jre7'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor:2.5.4'
+    annotationProcessor 'org.projectlombok:lombok:1.18.20'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.5.4'
+    testImplementation 'io.projectreactor:reactor-test:3.4.9'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.5.4'
     implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
-    runtimeOnly 'com.h2database:h2'
+    runtimeOnly 'com.h2database:h2:1.4.200'
 }
-
-//tasks.distZip.get().enabled = false
-//tasks.shadowDistZip.get().enabled = false
 
 test {
     useJUnitPlatform()
