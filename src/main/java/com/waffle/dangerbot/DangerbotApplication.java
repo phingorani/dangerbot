@@ -1,9 +1,6 @@
 package com.waffle.dangerbot;
 
-import com.waffle.dangerbot.listeners.BotCommandListener;
-import com.waffle.dangerbot.listeners.RollListener;
-import com.waffle.dangerbot.listeners.UpdateUsersListener;
-import com.waffle.dangerbot.listeners.WelcomeListener;
+import com.waffle.dangerbot.listeners.*;
 import org.javacord.api.DiscordApi;
 import org.javacord.api.DiscordApiBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +28,9 @@ public class DangerbotApplication {
     @Autowired
     private UpdateUsersListener updateUsersListener;
 
+    @Autowired
+    private AddRoleListener addRoleListener;
+
 
     public static void main(String[] args) {
         ApplicationContext applicationContext = SpringApplication.run(DangerbotApplication.class, args);
@@ -44,18 +44,16 @@ public class DangerbotApplication {
         DiscordApi api = new DiscordApiBuilder()
                 .setToken(token)
                 .setAllIntents()
+                .addListener(rollListener)
+                .addListener(botCommandListener)
+                .addListener(welcomeListener)
+                .addListener(updateUsersListener)
+                .addListener(addRoleListener)
                 .login()
                 .join();
 
         // Print the invite url of your bot
         System.out.println("You can invite the bot by using the following url: " + api.createBotInvite());
-
-        // Add a listener
-        api.addListener(rollListener);
-        api.addListener(botCommandListener);
-        api.addListener(welcomeListener);
-        api.addListener(updateUsersListener);
-
     }
 
 }
