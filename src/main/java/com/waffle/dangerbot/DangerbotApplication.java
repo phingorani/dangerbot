@@ -1,6 +1,8 @@
 package com.waffle.dangerbot;
 
 import com.waffle.dangerbot.listeners.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.javacord.api.DiscordApi;
 import org.javacord.api.DiscordApiBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,8 @@ public class DangerbotApplication {
 
     @Autowired
     private AddRoleListener addRoleListener;
+
+    private static final Logger logger = LogManager.getLogger(DangerbotApplication.class);
 
 
     public static void main(String[] args) {
