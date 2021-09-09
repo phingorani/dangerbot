@@ -1,5 +1,9 @@
 package com.waffle.dangerbot.entity;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 @Entity
@@ -29,12 +33,17 @@ public class DiscordUser {
     @Column(name = "discord_id")
     private Long discordId;
 
+    @Column(name = "server_id")
+    private Long serverId;
+
     public DiscordUser(String displayName, Long discordId) {
         this.displayName = displayName;
         this.discordId = discordId;
     }
 
-    public DiscordUser() {
+    public DiscordUser() {}
 
-    }
+    public Long getServerId() {return serverId;}
+
+    public void setServerId(Long serverId) {this.serverId = serverId;}
 }
