@@ -22,6 +22,7 @@ public class AddRoleListener implements MessageCreateListener {
                 System.out.println("Adding role new to "+event.getMessage().getUserAuthor().get().getName());
                 serverUpdater.addRoleToUser(event.getMessage().getUserAuthor().get(),role.get());
                 serverUpdater.update();
+                event.getMessage().getUserAuthor().get().addRole(role.get(),null);
             }
         }
     }
