@@ -12,7 +12,8 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class DiscordUserService {
+public class
+DiscordUserService {
 
     @Autowired
     private final DiscordUserRepository discordUserRepository;

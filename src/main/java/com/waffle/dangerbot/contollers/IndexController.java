@@ -46,7 +46,6 @@ public class IndexController {
         return appName + "\n Version: " + appVersion;
     }
 
-
     @GetMapping("downloadUserList/{discordId}")
     ResponseEntity<InputStreamResource> downloadUserList(@PathVariable String discordId) throws IOException {
         RestTemplate restTemplate = new RestTemplate();
@@ -72,8 +71,8 @@ public class IndexController {
                 = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, new ParameterizedTypeReference<List<UserBasePojo>>() {
         });
         Date d2 = new Date();
-        Long seconds = (d2.getTime()-d1.getTime());
-        System.out.println("Response at "+seconds.toString());
+        long seconds = (d2.getTime()-d1.getTime());
+        System.out.println("Response at "+ Long.toString(seconds));
 
         List<String[]> dataLines = new ArrayList<>();
         response.getBody().forEach(userBasePojo -> {
@@ -94,6 +93,5 @@ public class IndexController {
                 .contentLength(fileToDownload.length())
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
                 .body(resource);
-
     }
 }
