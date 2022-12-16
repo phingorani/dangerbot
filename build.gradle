@@ -33,7 +33,7 @@ dependencies {
     implementation group: 'org.apache.logging.log4j', name: 'log4j-api'
     implementation group: 'org.apache.logging.log4j', name: 'log4j-core'
     implementation 'org.javacord:javacord:3.5.0'
-    implementation 'com.fasterxml.jackson.core:jackson-core:2.13.3'
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.14.0'
     implementation 'org.springframework.boot:spring-boot-starter-web:2.7.2'
     runtimeOnly 'org.springframework.boot:spring-boot-starter-tomcat:2.7.2'
     implementation 'org.springframework.boot:spring-boot-starter-web-services:2.7.2'
@@ -41,14 +41,14 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-rest'
     compileOnly 'org.projectlombok:lombok:1.18.22'
     developmentOnly 'org.springframework.boot:spring-boot-devtools:2.7.2'
-    runtimeOnly 'org.postgresql:postgresql:42.4.0'
+    runtimeOnly 'org.postgresql:postgresql:42.5.1'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor:2.7.2'
     annotationProcessor 'org.projectlombok:lombok:1.18.22'
     testImplementation 'org.springframework.boot:spring-boot-starter-test:2.7.2'
     testImplementation 'io.projectreactor:reactor-test:3.4.11'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.7.2'
     implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
-    runtimeOnly 'com.h2database:h2:2.1.212'
+    runtimeOnly 'com.h2database:h2:2.1.214'
 }
 
 test {

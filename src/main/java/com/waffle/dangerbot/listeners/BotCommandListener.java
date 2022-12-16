@@ -26,7 +26,7 @@ public class BotCommandListener implements MessageCreateListener {
             event.getChannel().sendMessage("Current Version is "+versionNum);
         }
         Optional<DiscordUser> exists = Optional.ofNullable(discordUserService.findByDiscordId(event.getMessageAuthor().getId()));
-        if (exists.isEmpty()) {
+        if (!exists.isPresent()) {
             DiscordUser discordUserToSave = new DiscordUser(event.getMessageAuthor().getDisplayName(), event.getMessageAuthor().getId());
             discordUserService.save(discordUserToSave);
         }

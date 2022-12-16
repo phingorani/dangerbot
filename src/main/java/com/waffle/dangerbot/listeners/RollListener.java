@@ -11,8 +11,6 @@ import org.javacord.api.listener.message.MessageCreateListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
@@ -52,10 +50,8 @@ public class RollListener implements MessageCreateListener {
         else {
             winnerId = exists.get().getChallengerId();
         }
-        if (exists.isPresent()) {
-            gameSessionService.delete(exists.get());
-            event.getChannel().sendMessage("<@" + event.getMessageAuthor().getId() + "> challenge with <@" + winnerId + "> deleted Quitter!");
-        }
+        gameSessionService.delete(exists.get());
+        event.getChannel().sendMessage("<@" + event.getMessageAuthor().getId() + "> challenge with <@" + winnerId + "> deleted Quitter!");
     }
 
     private void acceptChallengeSession(MessageCreateEvent event) {
@@ -72,7 +68,7 @@ public class RollListener implements MessageCreateListener {
 
         Optional<GameSession> exists = Optional.ofNullable(gameSessionService.findGameSessionByChallengedIdOrChallengerId(event.getMessageAuthor().getId()));
 
-        if (exists.isEmpty()) {
+        if (!exists.isPresent()) {
             return;
         }
 
